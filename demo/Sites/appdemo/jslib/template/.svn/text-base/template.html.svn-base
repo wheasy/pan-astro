@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+    <title>Untitled</title>
+    <meta charset="utf-8" /></head>
+
+<body>
+
+<div id="content"></div>
+<script id="test" type="text/html">
+{{if isAdmin }}
+是管理员
+{{/if}}
+<h1>{{title}}</h1>
+<ul>
+    {{each list as item index}}
+        <li>索引 {{item}} ：{{index}}</li>
+    {{/each}}
+</ul>
+<br/>
+<div>{{each links as item index}}
+  {{each item as item2}}
+  {{=item2}}
+  {{/each}}
+{{/each}}
+</div>
+{{obj["name"]}}
+</script>
+
+<label for=""></label><input type="text" name="" value="kkk" data-role="aaa"/>
+
+</body>
+<script src="http://r.xgimg.net/js/moui/1.0.5/mo.js?combine=true&debug=true&amp;mv=1.0.5&amp;v=788989"></script>
+<script>
+    Mo.require('node,template', function(M){
+
+
+        //通过对象加载模版
+        var data = {
+            title: '基本例子',
+            isAdmin: true,
+            list: ['文艺', '博客', '摄影', '电影', '民谣', '旅行', '吉他'],
+        links: [['11','12'],['21','22']],
+            obj:{
+                name:'hello obj'
+            }
+        };
+
+
+        //直接读取模版
+
+        var s2 = '{{if isAdmin}}是管理员{{/if}}    <ul>{{each list}}<li>{{$index}}.{{$value}}</li>{{/each}}</ul>';
+
+        //M.Template(TPL_STR)(data)
+        M.one(document.body).append(M.Template(s2)(data));
+
+        //M.Template(TPL_ID, data)
+        M.one(document.body).append(M.Template("test", data));
+
+
+
+    })
+</script>
+</html>

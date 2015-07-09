@@ -1,0 +1,4 @@
+<div class="list-null">
+	<div class="null-img"></div>
+    <p>{{== text || '列表为空！'}}</p>
+</div>

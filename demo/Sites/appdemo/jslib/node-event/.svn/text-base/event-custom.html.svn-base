@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>自定义事件</title>
+    </head>
+
+    <body>
+
+        <h1 id="hello">HELLO WORLD!</h1>
+        <form>
+            <button type="submit" id="demo">CLICK</button>
+        </form>
+        <script src="http://r.xgimg.net/js/moui/1.0.5/mo.js?combine=true&debug=true&amp;mv=1.0.5&amp;v=788989"></script>
+        <script>
+            Mo.require('node', function(M) {
+                var n = new M.one('#hello');
+                var fn = function(e) {
+                    alert('fn:' + e);
+                }
+                var fn2 = function(e) {
+                    alert('fn2:' + e);
+                }
+
+                //n.on('start',fn );
+                //n.on('start',fn2);
+                //n.off('start',fn2);
+                //n.fire('start','started');
+
+                //n.fire('click');
+                n.on('click', fn);
+
+
+
+                var i = 0;
+                var switchable = function(){
+                    var self = this;
+                    setTimeout(function(){
+                        //self.fire('beforeSwitch', 'beforeSwitch');
+                    },1000);
+                },
+                demoSwitch;
+                switchable.prototype = {
+                    init: function(){
+                        n.on('click', fn2);
+                        n.off('click', fn, self);
+
+                    }
+                };
+                M.extend(switchable, M.EventTarget);
+
+                demoSwitch = new switchable();
+
+                demoSwitch.on('beforeSwitch',fn);
+                demoSwitch.on('beforeSwitch',fn2);
+                demoSwitch.off('beforeSwitch',fn2);
+            })
+        </script>
+    </body>
+</html>

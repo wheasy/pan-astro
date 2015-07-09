@@ -1,0 +1,22 @@
+<div class="picture-page" >
+	<div data-role="slider" class="slider">
+		<div class="slider-nav">
+			{{each list as item key}}
+			<p class="picture-num {{if key==0}}on{{/if}}">{{key+1}}/{{list.length}}</p>
+			{{/each}}
+		</div>
+		<div class="slider-img">
+			{{each list as item key}}
+			<div class="img-box">
+				<div class="loading"><i class="m-icon i-spinner"></i></div>
+				{{if key==0}}
+				<img src="{{item}}" alt="">
+				{{else}}
+				<img data-src="{{item}}" alt="">
+				{{/if}}
+			</div>
+			{{/each}}
+		</div>
+	</div>
+	<p class="picture-name">{{content}}</p>
+</div>

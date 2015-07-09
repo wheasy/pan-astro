@@ -1,0 +1,85 @@
+/**
+document是对页面基本文档结构的描述.
+
+依赖文件：
+
+    "lib/basic/variables";
+    "lib/basic/classes";
+    "lib/structure/classes";
+
+@main document
+@module document
+@since 1.0.0
+**/
+
+
+
+
+/**
+$_document 代表所有document的命名空间，在它内部提供了所有对document的设置、调用等方法.
+
+@author luxiaoping
+@module document
+@class $_document
+**/
+
+$_document{
+    _base(){
+        /**
+        document的基础方法，对文档内容进行提前清除浮动。
+        @method base
+        **/
+        #hd,#bd,#ft,.hd,.bd,.ft,.g-clear,.g-mod,.g-mod .inner{
+            _clearfix();
+        }
+    }
+    _krssDoc(@id,@headHeight,@bdWidth:@pageWidth,@ftHeight){
+
+        /**
+        页面文档描述：#ft在内容不足一屏时居底显示
+
+        @method xg-front
+        @param {String} @id　页面的id名.
+        @param {Number} [@headHeight:88px] 页面头部的高度默认值为88px.
+        @param {Number} [@bdWidth:1010px]　页面主内容部分的宽度，默认值为1010px.
+    **/
+
+
+
+        #@{id}{
+            height:100%;
+        }
+        $_document _base();
+
+        html,body{
+            height:100%;
+        }
+        body{
+            min-width:@bdWidth;
+        }
+        #hd,#bd,#ft{
+            position:relative;
+        }
+        #hd{
+            z-index:4;
+        }
+        #bd{
+            min-height:100%;
+            margin:-@headHeight auto -@ftHeight;
+        }
+        #bd-inner{
+            padding:@headHeight  0 @ftHeight;
+            width:@bdWidth;
+            margin:0 auto;
+            height:e("calc(100% - @{headHeight})");
+        }
+        #ft{
+            z-index:3;
+            width:100%;
+            height: @ftHeight;
+        }
+    }
+
+}
+
+

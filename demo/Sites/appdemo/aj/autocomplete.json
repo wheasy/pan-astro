@@ -1,0 +1,44 @@
+{
+    "StatusCode":200,
+    "error_msg": "ok",
+    "data": {
+        "list": [{
+            "value": "\u5305 \u5973",
+            "text": "\u5305 \u5973"
+        }, {
+            "value": "\u5305 \u5305",
+            "text": "\u5305 \u5305"
+        }, {
+            "value": "\u5305 \u7537",
+            "text": "\u5305 \u7537"
+        }, {
+            "value": "\u5305",
+            "text": "\u5305"
+        }, {
+            "value": "\u5305\u888b",
+            "text": "\u5305\u888b"
+        }],
+        "merchantlist": [{
+            "nickname": "\u5b9d\u73e0\u5e97",
+            "uid": 31,
+            "follower": 163,
+            "head": "http:\/\/p1.xgimg.net\/group1\/M02\/00\/05\/Cgo2EFIM3PWAEKfJAAXhhZTo21U798_s9.jpg",
+            "province": "\u5317\u4eac",
+            "url": "http:\/\/www.yunmall.com\/shop\/?uid=31"
+        }, {
+            "nickname": "\u5b9d\u98d8\u5b98\u65b9\u6388\u6743\u5e97",
+            "uid": 348459,
+            "follower": 4,
+            "head": "http:\/\/p1.xgimg.net\/group1\/M05\/21\/4E\/Cgo2EFMZLnuACXFAAAARUlm7a4g871_s9.jpg",
+            "province": "",
+            "url": "http:\/\/www.yunmall.com\/shop\/?uid=348459"
+        }, {
+            "nickname": "\u53e4\u5821\u82b1\u56edCASTLEGARDEN",
+            "uid": 15430,
+            "follower": 32,
+            "head": "http:\/\/p1.xgimg.net\/group1\/M01\/25\/96\/Cgo2EFN1mXCAAzPUAABCnawMFqM747_s9.jpg",
+            "province": "\u6cb3\u5317",
+            "url": "http:\/\/www.yunmall.com\/shop\/?uid=15430"
+        }]
+    }
+}

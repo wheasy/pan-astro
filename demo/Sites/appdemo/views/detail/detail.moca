@@ -1,0 +1,243 @@
+@import "document";
+@import "icon";
+@import "form";
+_getbtn(define,m,auto,1);
+_getbtn(buy,l,50%,1);
+_getbtn(cart,l,50%,1);
+_getinput(100%,1,1);
+.view-detail{
+	.detail-wrap{
+		margin-top:4.5rem;
+		padding-bottom:4.5rem;
+	}
+	.slider{
+		position:relative;
+		height:16.5rem;
+		overflow:hidden;
+		img{
+			width:100%;
+		}
+		.menu{
+			position:absolute;
+			left:0;
+			bottom:0;
+			width:100%;
+			text-align:center;
+			a{
+				display:inline-block;
+				width:0.5rem;
+				height:0.5rem;
+				$box _radius(50%);
+				background-color:rgba(0,0,0,0.4);
+				margin:0.5rem 0.2rem;
+				&.on{
+					background-color:#fff;
+				}
+			}
+		}
+	}
+	.detail-inner{
+		margin:0 1rem;
+	}
+	.d-intro{
+	    $display _box();
+	    $display _box-align(center,left);
+	    padding:1rem 0;
+ 		$box _line(@Be7e7e7, 2 stretch,rgba(231,231,231,0.7),0 0 1px 0);
+	    p{
+		    width:75%;
+		    $text _wrap();
+		    font-size:1.7rem;
+	    }
+	    em{
+	    	display:block;
+	    	width:25%;
+	    	text-align:right;
+	    	font-size: 1.8rem;
+	    	color:#259fe5;
+	    }
+	}
+    h4{
+    	font-size:1.6rem;
+    }
+	.d-style{
+	    padding:1rem 0;
+ 		$box _line(@Be7e7e7, 2 stretch,rgba(231,231,231,0.7),0 0 1px 0);
+	    _clearfix();
+	    .size,.color{
+		    float:left;
+		    width:50%;
+	    }
+	    .color{
+	    	input[type="checkbox"]{
+				display:inline-block;
+				position:relative;
+				width:3rem;
+				height:3rem;
+				background-color:#fff;
+				$box _radius(50%);
+				margin:0.5rem 1rem 0.5rem 0;
+				&.blue{
+					background-color:#539ce1;
+				}
+				&.pink{
+					background-color:#f77eb4;
+				}
+				&.black{
+					background-color:#615e5f;
+				}
+			}
+			input[type="checkbox"]:checked:before{
+				position:absolute;
+				top:50%;
+				left:50%;
+			    _transform(translate(-50%,-50%));
+				font-size:2rem;
+				content: "\e8a2";
+				color:#fff;
+			}
+	    }
+
+    }
+	// .size{
+	.size-lst{
+		position:relative;
+		display:inline-block;
+		width:3rem;
+		height:3rem;
+		margin:0.5rem 0.9rem 0.5rem 0;
+	}
+	label{
+		position:absolute;
+		top:50%;
+		left:50%;
+	    _transform(translate(-50%,-50%));
+	}
+	input[type="checkbox"]{
+		display:inline-block;
+		width:100%;
+		height:100%;
+		background-color:rgba(255, 255, 255, 0);
+		$box _radius(50%);
+		border:1px solid #747c83;
+	}
+	input[type="checkbox"]:checked{
+		background-color:#fff;
+	}
+	// }
+	.d-eval{
+	    padding:1rem 0;
+ 		$box _line(@Be7e7e7, 2 stretch,rgba(231,231,231,0.7),0 0 1px 0);
+	    font-size:1.6rem;
+	}
+	.d-info{
+		padding:1rem 0;
+		p{
+			font-size:1.5rem;
+		}
+	}
+	.mask{
+		position: fixed;
+	}
+    @media screen and (min-width:320px){
+        .size-lst{
+            margin:0.5rem 1rem 0.5rem 0;
+        }
+    }
+}
+.ft-bar{
+    transform:translate(0,100%);
+    position:fixed;
+    bottom:0;
+	width:100%;
+	a{
+		float:left;
+	}
+	.btn-cart-l{
+		position:relative;
+    	padding-left:4rem;
+	}
+	span{
+		position:absolute;
+		width:4rem;
+		height:70%;
+		line-height:2;
+		left:0;
+		top:15%;
+		vertical-align:middle;
+		text-align:center;
+		border-right:1px solid rgba(225,225,225,0.3);
+		font-size:2rem;
+		.m-icon{
+			margin:0;
+		}
+    }
+}
+.ft-bar-show .ft-bar{
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    -webkit-transition-property: -webkit-transform; 
+    transition-property: -webkit-transform; 
+    -webkit-transform-origin: 0px 0px 0px; 
+    -webkit-transform:translate(0,0);
+}
+.picture-page{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    height: 100%;
+    width: 100%;
+    padding-top: 3.7rem;
+    p{
+        color:#fff;
+    }
+    .slider{
+        height: 100%;
+        padding-top: 1rem;
+    }
+    .slider-img{
+        height: 100%;
+        top:0;
+        .img-box{
+            height: 100%;
+            $display _box();
+            $display _orient(horizontal);
+            $display _box-align(center,center);
+
+        }
+    }
+    .slider-nav{
+        p{
+            text-align: center;
+        }
+    }
+    .picture-name{
+        position: absolute;
+        bottom: 1rem;
+        left: 1rem;
+        font-size:1.4rem;
+        $text _wrap();
+    }
+    .slider-nav{
+        p{
+            display: none;
+        }
+        p.on{
+            display: block;
+        }
+    }
+}
+.loading{
+    position:absolute;
+    top:50%;
+    left:50%;
+    _transform(translate(-50%,-50%));
+    font-size:2rem;
+    text-align:center;
+    p{
+        margin-top:1rem;
+        font-size:1.4rem;
+        color:#888;
+    }
+}

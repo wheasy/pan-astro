@@ -1,0 +1,6 @@
+module.exports = {
+    name: 'astro',
+    description: 'astro 示例站点'
+    // cdn: 'astroui.aiyingta.com',
+    // imgCdn:'default'
+}

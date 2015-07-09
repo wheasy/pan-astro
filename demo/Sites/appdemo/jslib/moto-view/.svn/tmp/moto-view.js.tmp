@@ -1,0 +1,618 @@
+/**
+ * ****************     View 的       ********
+ * ******** 加载执行顺序
+ * loaded
+ * afterLoaded
+ * loaded_lazy  完成页面渲染300毫秒后执行
+ * ********
+ * active   激活事件
+ * destroy  销毁事件
+ * slient   沉默(隐藏)事件
+ * ****************
+ * 可通过view-loaded来控制视图内部的定位在fixed和absolute之间转换, 以便在做动画时, fixed的元素在view之外
+ * ********
+ */
+Mo.define('view', function(M) {
+    var moto = Mt,
+        compiler = M.Compiler,
+        view_cache = {},
+        L = M.Lang,
+        viewBase = {},
+        view_ins_list = {},
+        isSupportAnim = L.isCool(); //是否支持动画
+    var hideStartPage = function(){return;
+        if(M.role('start-page')){
+            M.role('start-page').addClass('stare-page-hide');
+            setTimeout(function(){
+                 M.role('start-page').remove();
+            },1000)
+        }
+    }
+    moto.renderView = function(v, ele, params, rcfg, app) {
+        var v = moto.getView(v);
+        if (!v) {
+            return;
+        }
+        ele.addClass('ro-view');
+        ele.addClass('view-' + v.$viewName);
+        v.set('params', params);
+        v.set('host', ele);
+        v.set('app', app);
+
+        v.$$router = rcfg || {};
+        v.$inject();
+        var stamp = M.stamp(v, '$roid')
+        view_ins_list[stamp] = v;
+        return v;
+    };
+
+    viewBase = {
+        $on: function(name, handle, context) {
+            var self = this;
+            self.$events = self.$events || {};
+            self.$events[name] = self.$events[name] || {}
+            self.$events[name][M.stamp(handle)] = {
+                fn: handle,
+                context: context
+            };
+        },
+        // 清除所有的xpost
+        $clearXpost: function() {
+            var self = this;
+            // debugger;
+            M.each(self._$xpostlist, function(p, pid) {
+                // debugger;
+                if (!p) {
+                    return;
+                }
+                // console.log('cear');
+                var conn = self._$xpostlist[pid] && self._$xpostlist[pid].conn;
+                conn && conn.abort();
+                delete self._$xpostlist[pid];
+                self._$xpostlist[pid] = null;
+            });
+        },
+        $xPost: function(cfg) {
+            var self = this;
+            if (!cfg) {
+                return;
+            }
+            var fn = cfg.on && cfg.on.complete ? cfg.on.complete : null;
+            cfg.on = cfg.on || {};
+
+            cfg.on.complete = function() {
+                // this is cfg.on
+                fn && fn.call(this, arguments);
+                // self._$xpostlist[this.id].conn.abort();
+                delete self._$xpostlist[this.id];
+                self._$xpostlist[this.id] = null;
+            }
+            var xpost = M.xPost(cfg);
+            self._$xpostlist[M.stamp(cfg.on)] = xpost;
+        },
+        $off: function(name, fn) {
+            var self = this;
+            var ets = self.$events || {};
+            if (!fn) {
+                ets[name] = null;
+                return;
+            }
+            var gid = M.stamp(fn);
+            ets = ets[name] || {};
+            delete ets[gid];
+        },
+        $fire: function(name) {
+            //M.log('$fire'+":"+name);
+            var scope = this,
+                es,
+                args = M.Array.toArray(arguments).slice(1);
+            scope.$events = scope.$events || {};
+            es = scope.$events[name];
+
+            M.each(es, function(handle) {
+                handle.fn.apply(handle.context || scope, args);
+            });
+        },
+        $init: function() {
+            var self = this,
+                l = 0;
+            M.extend(self, Mt.scopeBase);
+            M.stamp(self, false, '$moid');
+            self.$dom = {};
+            self._$xpostlist = {};
+            // elf._$xpostlist[M.stamp(cfg.on)] =
+
+            self.cons(self, self.get('host'), self.get('params'), M);
+
+            //TODO 预加载
+            // var h = self.$html.match(/\<header[\s\S]*?\>[\s\S]*?\<\/header\>/ig);
+            var h = self.$html.match(/\<header[\s\S]*?\>[\s\S]*?\<\/header\>/ig);
+
+            h = (h ? h[0] : '') + $res.tpl.app.view_loading;
+
+            var $html = self.$html;
+            self.$html = h;
+            self.get('host').setStyles({
+                'transform': 'translateX(100%)',
+                "-moz-transform": 'translateX(100%)',
+                "-webkit-transform": 'translateX(100%)',
+                "-ms-transform": 'translateX(100%)'
+            });
+            M.Compiler.render(self, self.get('host'));
+            self.$html = $html;
+            // return
+            self.$dataSource = self.$dataSource || [];
+            // var t1 = new Date
+            // console.log('beforeLoaded', t1 - 0);
+
+            self.$on('active', function(obj) {
+                // var t2 = new Date;
+                // console.log('laoded', t2 - 0 + ',  ' + (t2 - t1));
+                var scope = obj.scope;
+                scope.get('host').addClass('view-loaded');
+            });
+            self.$dataSource.bind = {};
+            if (M.Array.filter(self.$dataSource, function(item, idx) {
+                    M.each(item.map, function(m) {
+                        var m = m.split(':');
+                        self.$dataSource.bind[m[0]] = item;
+                    });
+                    return !item.lazy;
+                }).length) {
+                self.loadDataSource();
+            } else {
+                self.updateView();
+            }
+        },
+        // $slient:function(){
+
+        // },
+        // $active:function(){
+
+        // },
+        loadDataSource: function() {
+            var self = this;
+            self.$dataSource = self.$dataSource || [];
+            if (self.$dataSource.length) {
+                var $dataSource = [];
+                M.each(self.$dataSource, function(ds, idx) {
+                    var i = L.isNumber(ds.order) ? ds.order : 1;
+                    $dataSource[i] = $dataSource[i] || [];
+                    $dataSource[i].push(ds);
+                });
+                var groupCount = $dataSource.length;
+                var fnEachDataGroup = function(gIndex, self) {
+                    var dsGroup = $dataSource[gIndex];
+                    var gLength = dsGroup && dsGroup.length;
+                    if (gLength) {
+                        (function(dsGroup, dsLength) {
+                            M.each(dsGroup, function(api) {
+                                if (api.lazy || api.before && !api.before()) {
+                                    if (--dsLength === 0) {
+                                        fnEachDataGroup(++gIndex, self);
+                                    }
+                                    return;
+                                }
+                                var params = {};
+                                M.each(api.params, function(p, n) {
+                                    params[n] = L.isFunction(p) ? p() : p;
+                                });
+                                self.$xPost({
+                                    url: api.url,
+                                    data: params,
+                                    method: api.method,
+                                    on: {
+                                        success: function(res, cfg) {
+                                            // self.$xpost = null;
+                                            // if (res.MessageCode == 201) {
+                                            //     cfg.on.failure(res, cfg)
+                                            //     return;
+                                            // }
+                                            api.first = api.first ? false : true;
+                                            if (api.fn) {
+                                                api.fn(res);
+                                            }
+                                            var data = res.data;
+                                            M.each(api.map, function(m) {
+                                                var m = m.split(':');
+                                                self[m[0]] = m[1] == '*' ? data : L.getObjValue(data, m[1] || m[0]);
+                                            });
+                                            if (--dsLength === 0) {
+                                                fnEachDataGroup(++gIndex, self);
+                                                // self.updateView();
+                                            }
+                                        },
+                                        failure: function(res) {
+                                             // self.$xpost = null;
+                                            api.first = api.first ? false : true;
+                                            if (api.failure) {
+                                                api.failure();
+                                                if (--dsLength === 0) {
+                                                    fnEachDataGroup(++gIndex, self);
+                                                    // self.updateView();
+                                                }
+                                            } else {
+                                                if (res.MessageCode == 6) {
+                                                    // setTimeout(function() {
+                                                        location.href = $appCfg.LoginIndex + '?returnUrl=' + res.Message;
+                                                    // }, 1000);
+                                                    // self.get('app').router.redirect('/home');
+                                                }else{
+                                                    if (M.Lang.isUndefined(res.MessageCode)) {
+                                                        Mt.alert(res.Message);
+                                                    }
+                                                }
+                                                // self.set('needReload', true);
+                                                // localStorage.loginRefer = self.get('app').router.hash;
+                                                // // history.replaceState(null, "页面标题", "xxx.html");
+                                                // setTimeout(function() {
+                                                //     M.$Swap.noLoginAnimation = true;
+                                                //     self.get('app').router.redirect('/user/login');
+                                                // }, 350);
+                                                // return;
+                                                // }
+
+                                                // 未登录
+                                                // alert('there is a (ajax)error in view:' + api.url, res);
+                                                // setTimeout(function() {
+                                                self.$on('active', function() {
+                                                    Mt.alert(res.Message, {
+                                                        ok: function() {
+                                                            self.get('app').router.back();
+                                                        }
+                                                    });
+                                                });
+                                                // }, 20);
+                                            }
+                                        }
+                                    }
+                                });
+                            });
+                        }(dsGroup, dsGroup.length));
+                    } else {
+                        if (gIndex >= groupCount) {
+                            // if (self.get('isFirst') == false) {
+                            //     self.updateView();
+                            // } else {
+                            //     self.$on('ready', function() {
+                            setTimeout(function() {
+                                // code
+                                self.updateView();
+                            }, 1000);
+                            //     });
+                            // }
+                        } else {
+                            fnEachDataGroup(++gIndex, self);
+                        }
+                    }
+                }
+                fnEachDataGroup(0, self);
+            }
+        },
+        $inject: function() {
+            var self = this;
+
+            moto.getTpl('v', self.$viewName, function(tpl) {
+                //获取视图
+                // M.Template.get(self.$viewName, function(tpl) {
+                /*
+                if(!self.complier){
+                    elf.$tpl2 = compiler.precompile(tpl);
+                    self.complier = M.Template(tpl.replace(/(<\w+.*?)(\smt[a-z,-]\w+.*?>)/ig, '$1 mt$2'));
+                }
+                */
+                if (!tpl) {
+                    console.log('error', '未找到试图对应的TPL，请检查定义的视图名称(Moto.defineView)和文件名称是否一致');
+                }
+                self.$html = tpl;
+                self.$init();
+            });
+        },
+        //更新视图
+        updateView: function(isForce) {
+            var self = this,
+                host = self.get('host');
+            if (self.$$status && !isForce) {
+                return;
+            }
+            // self.$off('loaded');
+            // self.$off('loaded_lazy');
+            // self.$off('afterLoaded');
+            if (isForce) {
+                self.$fire('reUpdateView');
+            }
+            compiler.render(self, host, false, 'v_' + self.$viewName);
+            // #tag scope.$dom
+            // 把data-role的节点半丁到scopr.$dom上
+            host.all('[data-role]').each(function() {
+                self.$dom[this.getAttr('data-role')] = this;
+            });
+
+            // var tb = new Date - 0;
+            // console.info('AfterRenderView' + tb + '  ' + (tb - ta)/1000);
+            // setTimeout(function(){
+            // alert('AfterRenderView' + tb + '  ' + (tb - ta)/1000);
+            // }, 2000)
+            // setTimeout(function(){
+            self.$fire('loaded', {
+                scope: self,
+                isForce: isForce
+            });
+            if (self.$events['loaded_lazy']) {
+                //延迟 300 毫秒 触发loaded_lazy, 可通过该事件错开CPU占用高峰
+                setTimeout(function() {
+                    self.$fire('loaded_lazy', {
+                        isForce: isForce
+                    });
+                }, 300);
+            }
+            self.$fire('afterLoaded', {
+                isForce: isForce
+            });
+
+            self.$$status = 'rendered';
+            // }, 10)
+        },
+        destroy: function() {
+            var self = this;
+            self.$clearXpost();
+            self.$fire('destroy');
+            self.get('host').remove();
+            delete view_ins_list[self.$roid];
+        },
+        /**
+         * 隐藏视图
+         * @param  {Boolean} isDestroy 是否销毁
+         */
+        $hide: function(isAnimation, isDestroy, cbl) {
+            isAnimation = !!isAnimation && isSupportAnim;
+            // console.log('$hide2: isAnimation', isAnimation);
+            //激活hide事件
+            var self = this,
+                app = this.app,
+                host = self.get('host');
+
+            if (L.isFunction(self.$showCbl)) {
+                self.$showCbl();
+                self.$showCbl = null;
+            }
+            if (self.get('status') === 'slient') {
+                isDestroy && self.destroy();
+                return;
+            }
+            moto.hideConfirm();
+            // self.hideCbl = cbl;
+            // 正在做显示动画, 则取消动画, 并隐藏
+            if (self.$timer_show) {
+                clearTimeout(self.$timer_show);
+                self.$timer_show = null;
+            }
+            // if (animation) {
+            host.setData('$scrollTop', document.body.scrollTop);
+            if (isAnimation) {
+                //隐藏之前, 删除 view-loadedClass, 以便取消当前视图中的positon:fixed
+                host.removeClass('view-loaded,ro-view-in');
+                host.addClass('ro-view-out');
+
+                self.set('status', 'slient');
+                self.$timer_hide = setTimeout(function() {
+                    host.setStyle('zIndex', 1);
+                    self.$fire('slient', {
+                        scope: self
+                    });
+                    host.hide();
+                    host.removeClass('ro-view-in,ro-view-out');
+                    isDestroy && self.destroy();
+                }, 300);
+            } else {
+                host.setStyle('zIndex', 1);
+                host.hide();
+                self.set('status', 'slient');
+                host.setStyles({
+                    'transform': 'translateX(100%)',
+                    "-moz-transform": 'translateX(100%)',
+                    "-webkit-transform": 'translateX(100%)',
+                    "-ms-transform": 'translateX(100%)'
+                });
+                host.removeClass('ro-view-in,ro-view-out');
+                // host.setStyle('left', '103%');
+                self.$fire('slient', {
+                    scope: self
+                });
+                isDestroy && self.destroy();
+            }
+        },
+        /**
+         * 显示视图
+         * @param  {Boolean} isAnimation 是否做都动画效果
+         * @return {[type]}              [description]
+         */
+        $show: function(isAnimation, cbl) {
+            // console.log('show:' + this.$viewName);
+            // console.log('$show1: isAnimation', isAnimation);
+            isAnimation = !!isAnimation && isSupportAnim && !M.$Swap.noLoginAnimation;
+            // console.log('$show2: isAnimation', isAnimation);
+            M.$Swap.noLoginAnimation = false;
+            var self = this,
+                app = self.app,
+                host = self.get('host');
+            if (self.get('status') === 'active') {
+                return;
+            }
+            self.$showCbl = cbl;
+
+            if (self.$timer_hide) {
+                clearTimeout(self.$timer_hide);
+                self.$timer_hide = null;
+            }
+            host.setStyle('zIndex', 50);
+            host.show();
+            // alert(1);
+            // window.sss = window.sss?window.sss:0;
+            // alert(sss);
+            // if(++sss == 2){return;}
+            if (!isAnimation) {
+                host.setStyle('width', '100.1%');
+            }
+            //隐藏启动页面
+            setTimeout(function(){
+                if(hideStartPage){
+                    hideStartPage();
+                    hideStartPage = false;
+                }
+            },1000)
+
+           // return;
+            
+            self.$timer_show = setTimeout(function() {
+                // alert('isAnimation'+isAnimation);
+                // console.log('isAnimation');
+                if (isAnimation) {
+                    // var t3 = new Date;
+                    // console.log('beforeShow', t3 - 0 + ', left:' + host.getStyle('left'));
+                    // host.addClass('ro-view-base');
+                    // host.setStyle('left', '0');
+                    host.addClass('ro-view-in');
+                    self.set('status', 'active');
+                    self.$timer_show = setTimeout(function() {
+                        // var t4 = new Date;
+                        // console.log('afterShow', t4 - 0 + ',  ' + (t4 - t3));
+                        host.setStyle('zIndex', 20);
+                        cbl && cbl();
+                        self.$showCbl = null;
+                        self.$timer_show = setTimeout(function() {
+                            document.body.scrollTop = host.getData('$scrollTop') || 0;
+                        }, 20);
+                        if (self.get('isFirst') != false) {
+                            // 在动画加载完成以后, 加载数据或渲染页面
+                            // self.$fire('ready');
+                        }
+                        self.set('isFirst', false);
+                        // 需要重新load页面
+                        if (self.get('needReload')) {
+                            // console.log('needReload');
+                            self.set('needReload', false);
+                            self.loadDataSource();
+                        }
+                        host.setStyles({
+                            'transform': null,
+                            "-moz-transform": null,
+                            "-webkit-transform": null,
+                            "-ms-transform": null
+                        });
+                        host.removeClass('ro-view-in');
+                        self.$fire('active', {
+                            scope: self
+                        });
+                    }, 300);
+
+                } else {
+                    // host.addClass('ro-view-in');
+                    host.setStyles({
+                        'transform': null,
+                        "-moz-transform": null,
+                        "-webkit-transform": null,
+                        "-ms-transform": null
+                    });
+                    cbl && cbl();
+                    self.$showCbl = null;
+                    host.setStyle('zIndex', 20);
+                    self.set('status', 'active');
+                    document.body.scrollTop = host.getData('$scrollTop') || 0;
+                    host.setStyle('width', '100%');
+                    if (self.get('isFirst') != false) {
+                        setTimeout(function() {
+                            self.$fire('ready');
+                        }, 50);
+                    }
+                    self.set('isFirst', false);
+                    // 需要重新load页面
+                    if (self.get('needReload')) {
+                        self.set('needReload', false);
+                        self.loadDataSource();
+                    }
+                    self.$fire('active', {
+                        scope: self
+                    });
+                }
+            }, 10);
+        },
+        $mask:function(){
+            M.mask();
+        },
+        $confirm:function(message,callBack){
+            Mt.confirm(message, {
+                ok: function() {
+                    if(callBack && callBack.ok){
+                        callBack.ok();
+                    };
+                },
+                cancel:function(){
+                    if(callBack && callBack.cancel){
+                        callBack.cancel();
+                    };
+                }
+            });
+        },
+        $alert:function(message,success){
+            Mt.alert(message, {
+                ok: function() {
+                    if(success){
+                        success();
+                    };
+                }
+            });
+        },
+        $pluginCfg: {}
+    };
+
+    M.extend(moto, {
+        /**
+         * 获得视图
+         * @method getView
+         * @param  {string} viewName 视图名称
+         * @param  {bool} instantiation  是否需要实例化
+         * @return {[type]}          [description]
+         */
+        getView: function(viewName, instantiation) {
+            var v = view_cache[viewName];
+            if (!v) {
+                M.log('error', 'moto : 找不到名为 ' + viewName + ' 的视图');
+                return false;
+            }
+            if (instantiation != false) {
+                v = new v;
+                v.$viewName = viewName;
+                return v;
+            }
+            return v;
+        },
+        /**
+         * 判断是否有对应名称的视图
+         * @method existView
+         * @param  {string}  viewName 视图名称
+         * @return {bool}   存在则返回true
+         */
+        existView: function(viewName) {
+            return !L.isUndefined(view_cache[viewName])
+        },
+        //创建视图
+        defineView: function(name, constrator, cfg) {
+            var v = function() {
+                // debugger;
+                v.superclass.constructor.apply(this, arguments);
+                this.initDataByAttrs.apply(this);
+            };
+            if (view_cache[name]) {
+                console.log('warn', '名为的视图 ' + name + ' 已存在');
+            }
+            v.ATTRS = cfg || {};
+            M.extend(v, M.Base);
+            M.extend(v, viewBase);
+            M.extend(v, {
+                cons: constrator
+            });
+            view_cache[name] = v;
+        }
+    });
+});

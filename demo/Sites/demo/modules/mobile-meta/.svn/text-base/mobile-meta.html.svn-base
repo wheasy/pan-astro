@@ -1,0 +1,20 @@
+<!-- 手机站点的Meta -->
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<meta name="format-detection" content="telephone=no, email=no" />
+<meta name="screen-orientation" content="portrait">
+<!-- 是否强制全屏及应用模式 -->
+<?if $attr.app == 'true'?>
+<meta name="360-fullscreen" content="true" /> 
+<!-- QQ强制竖屏 -->
+<meta name="x5-orientation" content="portrait">
+<!-- QQ应用模式 -->
+<meta name="x5-page-mode" content="app">
+<!-- UC应用模式 -->
+<meta name="browsermode" content="application">
+<!-- uc强制竖屏 -->
+<meta name="screen-orientation" content="portrait">
+<!-- QQ强制全屏 -->
+<meta name="x5-fullscreen" content="true">
+<!-- UC强制全屏 -->
+<meta name="full-screen" content="yes">
+<?/if?>

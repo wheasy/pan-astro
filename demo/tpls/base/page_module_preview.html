@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <?title?>
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="<?==$page.get('$cdn')?>/css/m/<?$page.get('params')[" modulename "]?>"/>
+    <style type="text/css">
+    .mod-view {
+        *zoom: 1;
+    }
+    
+    .mod-view:after {
+        content: "\0020";
+        display: block;
+        height: 0;
+        overflow: hidden;
+        clear: both;
+    }
+    
+    .mod-title {
+        height: 40px;
+        padding-left: 30px;
+        line-height: 40px;
+        color: #fff;
+        background: URL(/static/img/headerbg.jpg);
+    }
+    
+    .mod-methods {
+        height: 40px;
+        font-size: 22px;
+        margin: 30px;
+    }
+    
+    .mod-codes {
+        width: 90%;
+        height: 400px;
+        font-size: 14px;
+        margin: 30px;
+    }
+    </style>
+</head>
+
+<body>
+    <?child_tpl?>
+</body>
+
+</html>

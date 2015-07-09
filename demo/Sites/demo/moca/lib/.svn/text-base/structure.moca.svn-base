@@ -1,0 +1,277 @@
+/**
+structure的作用：定义模块的结构（布局），常用的有：栅格、液态（流式）和自适应结构
+                 在自适应结构中，又有常见的2列或3列布局
+依赖文件：
+
+    "lib/basic/variables";
+    "lib/basic/classes";
+    
+@main structure
+@module structure  
+@since 1.0.0
+**/
+
+
+
+
+
+@totalColumns: 12;
+/**
+$grid 代表所有grid的类的命名空间，它内部提供了三种模块结构（布局），分别为：栅格、
+液态结构和自适应结构
+
+@author 
+@module structure
+@class $_grid
+**/
+$grid{
+
+    /**
+    单列通栏模块
+    @method fullcolumn
+    **/
+	_fullcolumn(@moduleGap){
+		.grid{
+			margin-bottom:@moduleGap;
+		}
+	}
+
+    /**
+    栅格布局
+    调用：
+    $grid _grid(12,60px,12px);
+
+    @param {String}  @column 页面默认分为12等份
+    @param {String}  @gutterW 设置宽度
+    @param {String}  @space 设置间距
+
+
+    html结构：
+
+    <div class="grid">
+        <div class="grid-wrap">
+            <div class="g-u">1</div>
+            <div class="g-u">1</div>
+            <div class="g-u">1</div>
+            <div class="g-u">1</div>
+            <div class="g-u">1</div>
+            <div class="g-u">1</div>
+            <div class="g-u">1</div>
+            <div class="g-u">1</div>
+            <div class="g-u">1</div>
+            <div class="g-u">1</div>
+            <div class="g-u">1</div>
+            <div class="g-u">1</div>
+            <div class="g-u">1</div>
+            <div class="g-u g-11w">11</div>
+            <div class="g-u g-4w">4</div>
+            <div class="g-u g-8w">8</div>
+            <div class="g-u g-6w">6</div>
+            <div class="g-u g-6w">6</div>
+        </div>
+    </div>
+    **/
+
+    _grid(@column:12,@gutterW:60px,@space:12px){
+        .grid{
+            width:@column*@gutterW + (@column - 1)*@space;
+            overflow:hidden;
+            .grid-wrap{
+              margin-left:-@space;
+              margin-top:-@space;
+              _clearfix();
+            }
+            .g-u{
+                float:left;
+                margin-left:@space;
+                margin-top:@space;
+                width:@gutterW;
+            }
+            _columnW(@col) when(@col > 1){
+                .g-@{col}w{
+                    width:@col*@gutterW + (@col - 1)*@space;
+                }
+                _columnW(@col - 1);
+            }
+
+            _columnW(@column);
+        }
+    }
+
+
+    /**
+    自适应布局
+    调用：
+    两列：$grid _fit(200px,20px,left);
+    三列：$grid _fit(200px,20px,left，200px);
+    
+
+    @param {String}  @sidewidth 固定宽度的列宽
+    @param {String}  @gutter 列之间的间距
+    @param {String}  @direction 固定宽度的位置可选参数left、right
+    @param {String}  @asidewidth 三列结构另一列的宽度
+
+
+    html结构：
+    两列：
+        <div class="g-main">
+            <div class="g-wrap">自适应宽度</div>
+        </div>
+        <div class="g-side">固定宽度</div>
+    三列：
+        <div class="g-aside">另一列</div>
+        <div class="g-main">
+            <div class="g-wrap">自适应宽度</div>
+        </div>
+        <div class="g-side">固定宽度</div>
+    **/
+    _fit(@sidewidth: 200px, @gutter: 20px, @direction: left, @asidewidth: 0) {
+
+        _place (@direct) when (@direct = left){
+            .g-main,.g-side{
+                float:right;
+            }
+            .g-main{
+                margin-left:(-1 * @sidewidth);
+            }
+            .g-wrap{
+                margin-left:(@gutter + @sidewidth);
+            }
+        }
+        _place (@direct) when not (@direct = left){
+            .g-main,.g-side{
+                float:left;
+            }
+            .g-main{
+                margin-right:(-1 * @sidewidth);
+            }
+            .g-wrap{
+                margin-right:(@gutter + @sidewidth);
+            }
+        }
+
+        _aside (@direct, @width) when (@width > 0) and (@direct = left){
+            .g-main,.g-side,.g-aside{
+                float:right;
+            }
+            .g-main{
+                margin-right:(-1 * @sidewidth);
+                margin-left:(-1 * @asidewidth);
+            }
+            .g-wrap{
+                margin-right:(@gutter + @sidewidth);
+                margin-left:(@gutter + @asidewidth);
+            }
+            .g-aside{
+                width:@asidewidth;
+            }
+        }
+
+        _aside (@direct, @width) when (@width > 0) and (@direct = right){
+            .g-main,.g-side,.g-aside{
+                float:left;
+            }
+            .g-main{
+                margin-right:(-1 * @asidewidth);
+                margin-left:(-1 * @sidewidth);
+            }
+            .g-wrap{
+                margin-right:(@gutter + @asidewidth);
+                margin-left:(@gutter + @sidewidth);
+            }
+            .g-aside{
+                width:@asidewidth;
+                position:relative;
+            }
+        }
+
+        .g-main{
+            width:100%;
+        }
+        .g-side{
+            width:@sidewidth;
+        }
+
+        _place (@direction);
+        _aside (@direction, @asidewidth);
+    }
+    /**
+    固定结构
+    @method fixed
+    @param {Number} [@columnWidth] 单位列宽（默认单位为PX，可忽略不写），如：30
+    @param {Number} [@gutterwidth] 单位分割占位
+    **/
+    _fixed(@columnWidth,@gutterwidth){
+        _UnitX (@index) when (@index > 0) {
+            .unit@{index}{ _unit(@index); }
+            _UnitX(@index - 1);
+        }
+
+
+        _unit (@columns) {
+            width:(@columnWidth * @columns) + (@gutterwidth * (@columns - 1));
+        }
+
+        [class*="unit"] {
+            float:left;
+            margin-right:@gutterwidth;
+        }
+
+        .grid {
+            margin-right: @gutterwidth * -1;
+            _clearfix();
+        }
+
+        .container{
+            _unit(@totalColumns);
+            margin-left:auto;
+            margin-right:auto;
+        }
+
+        _UnitX (@totalColumns);
+        _UnitX (0) {}
+    }
+    /**
+    液态结构,各种使用情况说明:
+    < 768px 为手持设备，使用液态布局
+    >= 768px && <980px  cloumns 12 gutterwidth 20px columnWidth 44px FixedWidth 748px
+    >= 980px && <1200px cloumns 12 gutterwidth 20px columnWidth 60px FixedWidth 960px
+    >= 1200px  cloumns 12 gutterwidth 20px  columnWidth 80px FixedWidth 1180px
+    
+        HTML结构：
+        
+        <div class="grid-fluid">
+            <div class="unit2"></div>
+            <div class="unit10 last"></div>
+        </div> 
+        
+    @method fluid
+    @param {Number} [@columnWidth] 单位列宽（默认单位为PX，可忽略不写），如：30
+    @param {Number} [@gutterwidth] 单位分割占位        
+    **/
+    _fluid(@columnWidth,@gutterwidth){
+        _UnitX (@index) when (@index > 0) {
+            .unit@{index}{ _unit(@index); }
+            _UnitX(@index - 1);
+        }
+        _unit (@columns) {
+            width:(@columnWidth * @columns) + (@gutterwidth * (@columns - 1));
+        }
+
+        [class*="unit"] {
+            float:left;
+            margin-right:@gutterwidth;
+        }
+        > [class*="unit"]:last-child,
+        > .last{
+            margin-right:0;
+        }
+
+        //generator seperator 12
+        _UnitX (@totalColumns);
+        _UnitX (0) {}
+
+    }
+
+
+}

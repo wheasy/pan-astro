@@ -1,0 +1,20 @@
+/*
+ *  Moto的核心JS和Moto的JS组件
+ */
+var svr = require('svr'),
+    mo = require('mo'),
+    path = require('path'),
+    fs = require('fs'),
+    moto = require('mo-moto');
+
+module.exports = svr.page({
+    attrs: {
+        type: 'js',
+        title: ''
+    },
+    process: function(request, response) {
+        var params = this.get('params');
+        var projectName = params.prjname;
+        response.$write(moto.getMotoSeedJs(projectName), true);
+    }
+});

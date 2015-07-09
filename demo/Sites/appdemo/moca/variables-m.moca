@@ -1,0 +1,30 @@
+// 版本号
+@version: "0.0.1";
+
+@baseFontFamily:STHeiti,arial,verdana,helvetica,sans-serif; //字体
+
+
+@baseLightColor:#fff;            //基本色浅
+@baseDeepColor:#000;             //基本色深
+
+@majorColor:#344b5b;             //主色
+@linkColor:@majorColor;          //链接色
+@linkHoverColor:@majorColor;     //链接hover色
+
+@docBackground:#ececec;          //背景颜色
+@inputBgDisabledColor:#d4d4d4;   //input禁用背景色
+@inputBdDisabledColor:#d4dadf;   //input禁用边框色
+@assistColor:#bdc7d4;            //placeholder文本色
+
+@markColor:red;                  //高亮文本色
+
+
+@baseFontSize:10px;	            //基本字号
+
+
+
+@baseLineHeight:  1.5;          //全站行高
+
+
+@Be7e7e7:'~/img/border/border-e7e7e7.png?v=@{version}';
+@d4dadf:'~/img/border/border-d4dadf.png?v=@{version}';

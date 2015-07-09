@@ -1,0 +1,11 @@
+module.exports = {
+    name: 'astro',
+<<<<<<< .mine
+    description: 'astro 示例站点',
+    // cdn: 'astroui.aiyingta.com',
+    imgCdn:'../..'
+} =======
+    description: 'astro 示例站点'
+    // cdn: 'astroui.aiyingta.com',
+    // imgCdn:'default'
+}>>>>>>> .r609

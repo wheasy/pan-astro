@@ -1,0 +1,14 @@
+@import "document";
+.page-c2{
+    .slide{
+        display: block;
+        width: 240px;
+        float: left;
+        background: #dedede;
+        min-height: 500px;
+    }
+    .g-main{
+        min-height: 500px;
+        margin-left: 240px;
+    }
+}

@@ -1,0 +1,35 @@
+<!-- 手机页面模板 -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title><?$attr.title?></title>
+    <meta charset="UTF-8">
+    <?if $attr.description?><meta name="description" content="<?== $attr.description?>" /><?/if?>
+    <?if $attr.keywords?><meta name="keywords" content="<?== $attr.keywords?>" /><?/if?>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, email=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+    <module:mobile-meta app="true" />
+    <? if $attr.singleApp == "true" ?>
+    <!-- 如果是单页模式，则调用~/css/"pagename"/app.css -->
+    <link rel="stylesheet" href="<?==$page.get('$cdn')?>/css/<?==$page.get('params')['pagename']?>/app.css" />
+    <?else?>
+    <link rel="stylesheet" href="<?==$page.get('$cdn')?>/css/p/<?==$page.get('params')['pagename']?>.css" />
+    <?/if?>
+</head>
+
+<body>
+    <?$mod_content?>
+    <script src="<?==$page.get('$cdn')?>/js/mo-single.js"></script>
+    <script src="<?==$page.get('$cdn')?>/js/resource.js"></script>
+    <?if $attr.app?>
+        <script src="<?==$page.get('$cdn')?>/js/<?==$page.get('params')['pagename']?>/app.js"></script>
+    <?else?>
+        <script src="<?==$page.get('$cdn')?>/js/p/<?==$page.get('params')['pagename']?>.js"></script>
+
+    <?/if?>
+</body>
+</html>

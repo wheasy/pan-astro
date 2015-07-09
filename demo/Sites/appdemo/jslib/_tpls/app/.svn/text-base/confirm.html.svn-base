@@ -1,0 +1,14 @@
+<div class="tips">
+	<!-- <h3><i class="m-icon i-info-outline"></i>Information</h3> -->
+	<div class="inner">
+		{{text}}
+	</div>
+	<div class="btn-box">
+		{{if button}}
+			<a href="javascript:;" class="m-btn btn-refuse-s" data-role="cancel">Refuse</a>
+			<a href="javascript:;" class="m-btn btn-define-s" data-role="ok">Yes</a>
+		{{else}}
+			<a href="javascript:;" class="m-btn btn-define-s btn-only" data-role="ok">Yes</a>
+		{{/if}}
+	</div>
+</div>

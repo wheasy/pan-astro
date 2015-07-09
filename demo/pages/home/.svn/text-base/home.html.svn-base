@@ -1,0 +1,31 @@
+<?extend base/page_astro?>
+<div class="lst-items">
+    <h2>页面列表</h2>
+    <ul>
+        <?each pagelist as item index?>
+            <li>
+                <a href="./<?item?>" target="_blank">
+                    <span class="green"></span>
+                    <p>
+                        <?==item?>
+                    </p>
+                </a>
+            </li>
+        <?/each?>
+    </ul>
+</div>
+<div class="lst-items">
+    <h2>模块列表</h2>
+    <ul>
+        <?each modulelist as item index?>
+            <li>
+                <a href="./m/<?item?>" target="_blank">
+                    <span class="pink"></span>
+                    <p>
+                        <?==item?>
+                    </p>
+                </a>
+            </li>
+        <?/each?>
+    </ul>
+</div>

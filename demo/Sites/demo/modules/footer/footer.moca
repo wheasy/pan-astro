@@ -1,0 +1,4 @@
+footer{
+    height: 120px;
+    background-color: #cc9933;
+}

@@ -1,0 +1,14 @@
+<?extend base/page_astro?>
+<div class="lst-items">
+    <h2>项目列表</h2> 
+    <ul>
+        <?each list as item idx ?>
+        <li>
+            <a href="<?==item[0]?>/" title="<?=item[1].description?>">
+                <span class="blue"></span>
+                <p><?==item[1].name?></p>
+            </a>
+        </li>
+        <?/each?>
+    </ul>
+</div>

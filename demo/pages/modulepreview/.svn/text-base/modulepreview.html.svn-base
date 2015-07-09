@@ -1,0 +1,6 @@
+<?extend base/page_module_preview?>
+<div class="mod-view"><?==module_html?></div>
+<div class="mod-title">引用方法</div>
+<textarea class="mod-methods" name="" id="" cols="30" rows="10"><?module_tag?></textarea>
+<div class="mod-title">模板结构</div>
+<textarea class="mod-codes" name="" id="" cols="30" rows="10"><?module_code?></textarea>

@@ -1,0 +1,8 @@
+<div class="overlay{{if skin}} {{skin}}{{/if}}" 
+    style="display:none;{{if !wrap}}position:absolute;{{/if}}{{if w}}width:{{w}};{{/if}}{{if h}}height:{{h}};{{/if}}">
+
+    {{if header}}<div data-role="header" class="overlay-header">{{==header}}</div>{{/if}}
+    {{if body}}<div data-role="body" class="overlay-body">{{==body}}</div>{{/if}}
+    {{if footer}}<div data-role="footer" class="overlay-footer">{{==footer}}</div>{{/if}}
+
+</div>

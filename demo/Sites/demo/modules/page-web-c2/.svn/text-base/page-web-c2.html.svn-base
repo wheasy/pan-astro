@@ -1,0 +1,26 @@
+<!-- Web-Pc页面模板 —— 2栏布局 -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title><?$attr.title?></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="<?==$page.get('$cdn')?>/css/moto-app.css"/>
+</head>
+<body>
+    <slide>侧边</slide>
+    <div class="g-main">
+        <div class="g-wrap">
+            <?$mod_content?>
+        </div>
+    </div>
+    <script src="<?==$page.get('$cdn')?>/js/mo-moto.js"></script>
+    <script src="<?==$page.get('$cdn')?>/js/resource.js"></script>
+    <script src="<?==$page.get('$cdn')?>/js/moto-app.js"></script>
+    <?if $page.get('$hasJs')?>
+        <script src="<?==$page.get('$cdn')?>/js/p/<?$page.get('params')["pagename"]?>.js"></script>
+    <?else?>
+        <!-- 该页面无JS -->
+    <?/if?>
+</body>
+
+</html>

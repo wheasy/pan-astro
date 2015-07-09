@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+    <title>Untitled</title>
+    <meta charset="utf-8" /></head>
+    <style>
+    .blue{color:blue;}
+    .red{background:red;}
+    </style>
+<body>
+
+Hello World!
+    <div id="abc">id=abc</div>
+    <div class="class">1</div><div class="class">12</div>
+    <button>点击卸载#abc插件</button><button id="bind">点击绑定#abc插件</button>
+</body>
+<script src="http://r.xgimg.net/js/moui/1.0.5/mo.js?combine=true&debug=true&amp;mv=1.0.5&amp;v=788989"></script>
+
+
+<script>
+    Mo.require('node-plugin', function(M){
+
+        var textNode = M.one('#abc'),
+            abcc = M.all('.class'),
+            btn = M.one('button'),
+            bind = M.one('#bind');
+
+        /*实现一个插件*/
+         //测试plugin 修改一个颜色
+        function ModifyColor(config){
+            ModifyColor.superclass.constructor.apply(this, arguments);
+        }
+        ModifyColor.NAME = 'modifyColor';
+        ModifyColor.NS = 'mc';
+
+        M.extend(ModifyColor, M.Plugin.Base, {
+            init: function(config){
+                //console.log(this)
+                //config 传入了配置和HOST
+                this.config = config;
+                this.host = config.host;
+                //this 实例化后的Plugin对象
+                            //debugger;
+                //this.config = config;
+                this.abc();
+            },
+            abc: function(){
+                this.host.addClass(this.config['cls']);
+                M.log(this.get('a'))
+            },
+            destroy: function(){
+                this.host.removeClass(this.config['cls'])
+            }
+        },{
+            ATTRS:{
+                a:1,
+                b:2
+            }
+        });
+
+        M.Plugin.ModifyColor = ModifyColor;
+
+        //以上
+
+
+        bind.on('click',function(e){
+            e.halt();
+            textNode.plug(M.Plugin.ModifyColor,{
+                cls: 'blue'
+            });
+            console.log(textNode);
+
+        })
+
+
+        abcc.plug(M.Plugin.ModifyColor,{
+            cls: 'red'
+        });
+        btn.on('click',function(e){
+            e.halt();
+            textNode.unplug(M.Plugin.ModifyColor)
+            console.log(textNode)
+        })
+
+
+    })
+</script>
+</html>

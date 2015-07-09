@@ -1,0 +1,67 @@
+<header mt-driver="wb-header" title="detail" leftButton="back"></header>
+<div class="detail-wrap">
+	<div class="slider" mt-click="showimg">
+		<img src="./img/temp/img07.jpg" alt="placeholder+image">
+<!-- 		<div class="menu">
+			<a href="#"></a>
+			<a href="#" class="on"></a>
+			<a href="#"></a>
+			<a href="#"></a>
+			<a href="#"></a>
+		</div> -->
+	</div>
+	<div class="detail-inner">
+		<div class="d-intro">
+			<p>The header words describle the product  give the customers</p>
+			<em>$456.00</em>
+		</div>
+		<div class="d-style">
+			<div class="color">
+				<h4>Colour</h4>
+                <input type="checkbox" class="m-icon blue" id="checkbox-1" />
+				<label for="checkbox-1"></label>
+                <input type="checkbox" class="m-icon pink" id="checkbox-2" />
+				<label for="checkbox-2"></label>
+                <input type="checkbox" class="m-icon black" id="checkbox-3" />
+				<label for="checkbox-3"></label>
+			</div>
+			<div class="size">
+				<h4>Size</h4>
+                <span class="size-lst">
+	                <input type="checkbox" class="m-icon" id="checkbox-4" />
+					<label for="checkbox-4">34</label>
+				</span>
+                <span class="size-lst">
+	                <input type="checkbox" class="m-icon" id="checkbox-5" />
+					<label for="checkbox-5">35</label>
+				</span>
+                <span class="size-lst">
+	                <input type="checkbox" class="m-icon" id="checkbox-6" />
+					<label for="checkbox-6">36</label>
+				</span>
+			</div>
+		</div>
+		<div class="d-eval">
+			<h4>Reviews & Rating</h4>
+			<div class="eval">
+				<span class="stars s-45">
+					<i class="m-icon i-star i-star1"></i>
+					<i class="m-icon i-star i-star2"></i>
+					<i class="m-icon i-star i-star3"></i>
+					<i class="m-icon i-star i-star4"></i>
+					<i class="m-icon i-star i-star5"></i>
+				</span>
+				260 reviews
+			</div>
+		</div>
+		<div class="d-info">
+			<h4>Description</h4>
+			<p>A life, a fulfilling life, a rich life includes ups and downs, includespain and getting up again, includes failure and getting up again.</p>
+			<p>They're a couple whose marital blessing had been granted by none other than God himself</p>
+		</div>
+	</div>
+</div>
+<div class="ft-bar">
+	<a class="m-btn btn-buy-l" mt-click="buy">Buy it Now</a>
+	<a class="m-btn btn-cart-l" mt-click="buy"><span><i class="m-icon i-shopping-cart"></i></span>Add to cart</a>
+</div>

@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>node-event</title>
+        <style>
+            #hello {background:gray;height:400px;}
+            .sel{width:150px;height:20px;display:block;background:red;border-bottom:2px solid white;}
+            #bad{width:100px;height:100px;background:green;}
+        </style>
+    </head>
+
+    <body>
+
+        <div id="hello">
+            <li class="sel"><span>span</span></li>
+            <li class="sel"></li>
+            <li class="sel"></li>
+            <input name="a" type="radio" value="1"/>
+            <input name="a" type="radio" value="2"/>
+        </div>
+        <div id="bad">BAD</div>
+        <form>
+            <button type="submit" id="demo">CLICK</button>
+        </form>
+        <script src="http://r.xgimg.net/js/moui/1.0.5/mo.js?combine=true&debug=true&amp;mv=1.0.5&amp;v=788989"></script>
+        <script>
+            Mo.require('node', function(M) {
+                var n = M.one('#hello');
+                var m = M.one('#input');
+                var fn = function(e,c,a,b){
+                    //alert(e.currentTarget.get('id'));
+                    alert(e.timeStamp);
+                };
+                var delefn = function(e) {
+                    console.log('delefn' + e);
+                };
+                n.delegate('mouseenter',function(){
+                    console.log('e');
+                },'li');
+                //n.on('click', fn, {a:1,b:2}, ['a','b']);
+                //n.on('click', delefn);
+                //n.fire('click','c');
+                /*
+                n.on('click', delefn);
+                n.off('click');
+                n.on('haha', fn);
+                n.on('haha', delefn);
+                n.off('haha',delefn);
+                n.fire('haha','a');
+                */
+                //m.fire('focus');
+                //n.delegate('click', delefn, 'input');
+                //n.undelegate('click', delefn, 'li');
+                //el.addEventListener('click',fn,true);
+                //el.removeEventListener('click',fn,true);
+            })
+        </script>
+    </body>
+</html>

@@ -1,0 +1,1005 @@
+/**
+basic定义全局公用方法，是moca的核心。
+在此约定命名空间的方式，
+$代表全局命名空间;
+@main basic
+@module basic
+@since 1_0_0
+**/
+
+
+/**
+定义字体属性
+@class $font
+@module basic
+**/
+$font{
+    /**
+    设置字体的样式，调用方法：
+        
+        Selector{
+            $font _family('微软雅黑');
+        }
+    
+    @method family
+    @param {String} [@family=@baseFontFamily] 默认字体为@baseFontFamily
+    **/
+    _family(@family: @baseFontFamily){
+        font-family : @family;
+    }
+    /**
+    设置字体的大小，调用方法：
+        
+        Selector{
+            $font _size(18px);
+        }
+    
+    @method size
+    @param {Number} [@size=@baseFontSize] 默认大小为@baseFontSize
+    **/
+    _size(@size: @baseFontSize){
+        font-size: @size;
+    }
+    /**
+    字体风格
+        
+        Selector{
+            $font _style();
+        }
+        
+    @method  style  
+    @param {Number} @style 默认正常
+    */
+    _style(@style:normal){
+        font-style:@style;
+    }
+    /**
+    字体粗细
+        
+        Selector{
+            $font _w(700);
+        }
+        
+    @method  style  
+    @param {Number} @style 默认正常
+    */
+    _weight(@weight:normal){
+        font-weight:@weight;
+    }
+}
+
+/**
+定义文本属性
+@class $text
+@module basic
+**/
+$text{
+    // Solution: 清除inline, inline-block间隙
+    _nospacewrap(){
+        font-size: 0;
+        // ~'[;font-size: 12px;]';
+        font-size: 0;
+        // font-family: arial;
+        // ~'[;letter-spacing: -3px;]';
+        letter-spacing: normal;
+        word-spacing: -1px;
+    }
+    _nospaceitem(){
+        $display _inline-block();
+        font-size: @baseFontSize;
+        // font-family: @baseFontFamily;
+        letter-spacing: normal;
+        word-spacing: normal;
+    }
+
+
+    // Solution: 未知尺寸元素垂直居中
+    _valignwrap(){
+        $text _nospacewrap();
+        .after,&:after{
+            $text _nospaceitem();
+            height: 100%;
+            vertical-align: middle;
+            content: '';
+        }
+    }
+    _valignitem(){
+        $text _nospaceitem();
+        vertical-align: middle;
+    }
+    /**
+    处理文本截字
+    单行文字溢出显示省略号(需额外设宽)
+        
+        Selector{
+            $text _ellipsis();
+        }
+        
+    @method ellipsis
+    */
+    _ellipsis(){
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    /**
+    强制换行
+        
+        Selector{
+            $text _wrap();
+        }
+        
+    @method wrap
+    */
+    _wrap(){
+        word-wrap: break-word;
+        word-break: break-all;
+    }
+    /**
+    强制一行显示(需额外设宽)
+        
+        Selector{
+            $text _nowrap();
+        }
+        
+    @method nowrap
+    */
+    _nowrap(){
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    /**
+    定义隐藏文本
+        
+        Selector{
+            $text _hide();
+        }
+        
+    @method hide
+    */
+    _hide(){
+        overflow: hidden;
+        text-indent: 100%;
+        white-space: nowrap;
+    }
+    /*
+    opacity(透明度),使用方法如下：
+            
+        Selector{
+            _opacity(0_2);
+        }
+        
+    @method opacity
+    @param {Number} @opacity 
+
+    */
+    _opacity(@opacity){
+        filter: ~"alpha(opacity=@{opacity})";
+        // -ms-filter:"progid:DXImageTransform_Microsoft_Alpha(Opacity=@{opacity})";
+        opacity: @opacity/100;
+    }
+
+
+    /*
+    _columns(多列布局，列宽和列数),使用方法如下：
+            
+        Selector{
+            _columns(column-width column-count);
+        }
+        
+    @method column
+    @param {Number} @col
+
+    */
+    _columns(@col){
+        -moz-columns:@col;
+        -webkit-columns:@col;
+        columns:@col;        
+    }
+
+
+    /*
+    _columns(多列布局，列间距),使用方法如下：
+            
+        Selector{
+            _columns-gap(10px);
+        }
+        
+    @method column
+    @param {Number} @col
+
+    */
+    _columns-gap(@col){
+        -moz-columns-gap:@col;
+        -webkit-columns-gap:@col;
+        columns-gap:@col;        
+    }
+
+    /*
+    _column-count(列数),使用方法如下：
+            
+        Selector{
+            _columns-count(10);
+        }
+        
+    @method _column-count
+    @param {Number} @col
+
+    */
+    _columns-count(@col){
+        -moz-columns-count:@col;
+        -webkit-columns-count:@col;
+        columns-count:@col;        
+    }
+    /*
+    _column-rule(规定列之间的宽度、样式和颜色规则),使用方法如下：
+            
+        Selector{
+            _column-rule(column-rule-color column-rule-style column-rule-width);
+        }
+        
+    @method column
+    @param {Number} @col
+
+    */
+    _column-rule(@col){
+        -moz-columns-rule:@col;
+        -webkit-columns-rule:@col;
+        columns-rule:@col;        
+    }
+}
+
+
+/**
+定义盒模型属性
+@class $box
+@module basic
+**/
+$box{
+    /**
+    设置元素宽高
+    @method size
+    @param {Number} @sizeW 宽度值
+    @param {Number} @sizeH 宽度值
+    @for Global
+    */
+    _size(@sizeW, @sizeH){
+        width:@sizeW;
+        height:@sizeH;
+    }
+
+    /**
+    生成正方形
+    @method square
+    @param {Number} @size 尺寸大小
+    @for Global
+    */
+    _square(@size){
+        width:@size;
+        height:@size;
+    }
+
+    /**
+    设置边框圆角半径，调用方法：
+        
+        Selector{
+            $box _radius(4px);
+        }
+    
+    @method radius
+    @param {Number} @radius
+    **/
+    _radius(@radius){
+        border-radius: @radius;
+        -moz-border-radius: @radius;/* 兼容老版本firefox */
+    }
+
+    /**
+    设置左上角圆角半径，调用方法：
+        
+        Selector{
+            $box _radius-tl(4px);
+        }
+    
+    @method radius-tl
+    @param {Number} @radius
+    **/
+    _radius-tl(@radius){
+        border-top-left-radius: @radius;
+        -moz-border-top-left-radius: @radius;
+    }
+    /**
+    设置右上角圆角半径，调用方法：
+        
+        Selector{
+            $box _radius-tr(4px);
+        }
+    
+    @method radius-tr
+    @param {Number} @radius
+    **/
+    _radius-tr(@radius){
+        border-top-right-radius: @radius;
+        -moz-border-top-right-radius: @radius;
+    }
+    /**
+    设置右下角圆角半径，调用方法：
+        
+        Selector{
+            $box _radius-br(4px);
+        }
+    
+    @method radius-br
+    @param {Number} @radius
+    **/
+    _radius-br(@radius){
+        border-bottom-right-radius: @radius;
+        -moz-border-bottom-right-radius: @radius;
+    }
+    /*
+    设置左下角圆角半径，调用方法：
+        
+        Selector{
+            $box _radius-bl(4px);
+        }
+    
+    @method radius-bl
+    @param {Number} @radius
+    */
+    _radius-bl(@radius){
+        border-bottom-left-radius: @radius;
+        -moz-border-bottom-left-radius: @radius;
+    }
+
+    /**
+    设置容器的阴影，使用方法如下：
+        
+    Selector{
+        $box _shadow(0 0 3px rgab(0,0,0,_03));
+    }
+
+    @method box-shadow
+    @param {String} @box-shadow
+    @for Global
+    **/
+    _shadow(@box-shadow){
+        box-shadow: (@box-shadow);
+    }
+    /**
+    设置容器的阴影，使用方法如下：
+        
+    Selector{
+        $box _img(url(border.png) 30 30 round);
+    }
+
+    @method border-img
+    @param {String} @border-img
+    @for Global
+    **/
+    _img(@border-img){
+        -webkit-border-image:@border-img;
+        -o-border-image:@border-img;
+        border-image:@border-img;
+    }
+    /**
+    box-sizing(盒模型)，有“content-box”和“border-box”两个值。
+定义 box-sizing: content-box; 时，浏览器对盒模型的解释遵从我们之前认识到的 W3C 标准；
+    定义 box-sizing: border-box; 时，浏览器对盒模型的解释与 IE6 相同； 使用方法如下：
+            
+        Selector{
+           $box _sizing(content-box);
+        }
+        
+    @method box-sizing
+    @param {String} @box-sizing
+    @for Global
+    */
+    _sizing(@box-sizing:border-box){
+        -moz-box-sizing: @box-sizing;
+         -ms-box-sizing: @box-sizing;
+             box-sizing: @box-sizing;
+    }
+
+    /**
+    容器图形边框，使用方法如下：
+        
+    Selector{
+        $box _img(url(border.png) 30 30 round);
+    }
+
+    @method border-img
+    @param {String} @border-img
+    @for Global
+    **/
+    _line(@img,@type,@color:rgba(231,231,231,0.7),@dir:0 0 1px 0){
+        border:1px solid transparent;
+        border-width:@dir;
+        border-color:@color;
+        -webkit-border-image: url(@img) @type;
+        -moz-border-image: url(@img) @type;
+        -o-border-image: url(@img) @type;
+        border-image: url(@img) @type;
+    }
+
+}
+
+
+/**
+定义元素显示
+@class $display
+@module basic
+**/
+$display{
+    /**
+    设置元素以行内显示
+    
+        Selector{
+            $display _inline();
+        }
+    
+    @method inline
+    **/
+    _inline(){
+        display:inline;
+    }
+    /**
+    设置元素以内联块显示
+    
+        Selector{
+            $display _inline-block();
+        }
+    
+    @method inline-block
+    **/
+    _inline-block(){
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
+    }
+    /**
+    设置元素以表格显示
+    
+        Selector{
+            $display _table();
+        }
+    
+    @method table
+    **/
+    _table(){
+        display: table;
+    }
+    /**
+    设置元素以tr显示
+    
+        Selector{
+            $display _table-row();
+        }
+    
+    @method table-cell
+    **/
+    _table-row(){
+        display: table-row;
+    }
+    /**
+    设置元素以tb显示
+    
+        Selector{
+            $display _table-cell();
+        }
+    
+    @method table-cell
+    **/
+    _table-cell(){
+        display: table-cell;
+    }
+    /**
+    设置元素以伸缩盒子显示
+    
+        Selector{
+            $display _box();
+        }
+    
+    @method box
+    **/
+    _box(){
+        display: -webkit-box;
+        display: -moz-box;
+        display: -o-box;
+        display: box;
+    }
+    /**
+    设置元素以伸缩盒子显示
+    
+        Selector{
+            $display _box();
+        }
+    
+    @method box
+    **/
+    _flexbox(){
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+    }
+    /**
+    设置伸缩项
+    
+        Selector{
+            $display _flex(1);
+        }
+    
+    @method flex
+    **/
+    _flex(@val:1){
+        -webkit-box-flex:@val;
+        -moz-box-flex:@val;
+        -webkit-flex:@val;
+        -ms-flex:@val;
+        flex:@val;
+    }
+    /**
+    排版方式
+        Selector{
+            $display _direction(column);
+        }
+    
+    @method direction
+    **/
+    _direction(@val:row){
+        -ms-flex-direction:@val;
+        -webkit-flex-direction:@val;
+        flex-direction:@val;
+    }
+    
+    /**
+    规定框的子元素应该被水平或垂直排列
+    
+        Selector{
+            $display _orient(horizontal);
+        }
+    
+    @method orient
+    **/
+    _orient(@val){
+        -moz-box-orient:@val;
+        -webkit-box-orient:@val;
+        box-orient:@val;
+    }
+
+    /**
+    规定如何对齐框的子元素
+    
+        Selector{
+            $display _bok-align(center center);
+        }
+    
+    @method align
+    **/
+    _box-align(@aliVal,@packVal){
+        -moz-box-align:@aliVal;
+        -webkit-box-align:@aliVal;
+        box-align:@aliVal;
+        -moz-box-pack:@packVal;
+        -webkit-box-pack:@packVal;
+        box-pack:@packVal;
+    }
+
+    // *
+    // 指定子元素布局是在一行还是一列显示
+    
+    //     Selector{
+    //         $display _flex-flow(row wrap);
+    //     }
+    
+    // @method box-pack
+    // *
+    // _flex-flow(@val){
+         // flex-flow:@val;
+    // }
+    
+    /**
+    设置伸缩项的显示顺序
+    
+        Selector{
+            $display _order(1);
+        }
+    
+    @method order
+    **/
+    _order(@val) {
+    -webkit-box-ordinal-group:@val;  
+    -moz-box-ordinal-group:@val;     
+    -ms-flex-order:@val;     
+    -webkit-order:@val;  
+    order:@val;
+    }
+        /**
+    设置元素以块元素显示
+        Selector{
+            $display block();
+        }
+     
+    @method block
+    */
+    _block(){
+        $display _show();
+    }
+    /**
+    不占位隐藏
+    
+        Selector{
+            $display _fixed();
+        }
+        
+    @method hide
+    */
+    _fixed(){
+        display:fixed;
+    }
+    /**
+    不占位隐藏
+    
+        Selector{
+            $display _hide();
+        }
+        
+    @method hide
+    */
+    _hide(){
+        display: none;
+    }
+    /**
+    显示(display:block)
+        
+        Selector{
+            $display _show();
+        }
+        
+    @method show
+    */
+    _show(){
+        display: block;
+    }
+    /**
+    占位隐藏
+        
+        Selector{
+            $display _hidden();
+        }
+        
+    @method hidden
+    */
+    _hidden(){
+        visibility: hidden;
+    }
+    /**
+    显示(visibility:visible)
+        
+        Selector{
+            $display _visible();
+        }
+        
+    @method visible
+    */
+    _visible(){
+        visibility: visible;
+    }
+    
+   
+    
+}
+
+
+
+/**
+定义背景
+@class $bg
+@module basic
+**/
+$bg{
+    /**
+    _color(背景颜色)使用方法如下：
+            
+        Selector{
+            $bg _color(#ccc);
+        }
+        
+    @method _img
+    @param {String} @bgcolor 色值
+    @for Global
+    **/
+    _color(@bgcolor){
+        background-color:@bgcolor;       
+    }
+    /**
+    _linear(2色简单线性渐变) 使用方法如下：
+            
+        Selector{
+            $bg _linear('background, 0_5s, ease-in');
+        }
+        
+    @method _linear
+    @param {String} @attr 
+    @for Global
+    **/
+    _linear(@attr){
+        //background-image: -webkit-gradient(linear,center top,center bottom,from(@startColor),to(@endColor));
+        background-image: -webkit-linear-gradient(e(@attr));
+        background-image:    -moz-linear-gradient(e(@attr));
+        background-image:      -o-linear-gradient(e(@attr));
+        background-image:         linear-gradient(e(@attr));
+    }
+    /**
+    _linear(2色简径向渐变) 使用方法如下：
+            
+        Selector{
+            $bg _radial('background, 0_5s, ease-in');
+        }
+        
+    @method _linear
+    @param {String} @deg 
+    @for Global
+    **/
+    _radial(@attr){
+        background-image: -webkit-radial-gradient(e(@attr));
+        background-image:    -moz-radial-gradient(e(@attr));
+        background-image:      -o-radial-gradient(e(@attr));
+        background-image:         radial-gradient(e(@attr));
+    }
+    /**
+    _img(背景图片兼容二倍图)使用方法如下：
+            
+        Selector{
+            $bg _img('../img.png');
+        }
+        
+    @method _img
+    @param {String} @imgName 图片名字
+    @param {String} @imgType 图片后缀
+    @for Global
+    **/
+    _img(@bgImg){
+        background-image: url(@bgImg);
+    }
+    /**
+    _repeat(背景是否平铺及平铺方式)使用方法如下：
+            
+        Selector{
+            $bg _repeat(no);
+        }
+        
+    @method _repeat
+    @param {String} @repeat no为不平铺,repeat为平铺，x为横向平铺，y为纵向平铺
+    @for Global
+    */
+    _repeat(@repeat)when(@repeat = no){
+        background-repeat:no-repeat;
+    }
+    _repeat(@repeat)when(@repeat = repeat){
+        background-repeat:repeat;
+    }
+    _repeat(@repeat)when(@repeat = x){
+        background-repeat:repeat-x;
+    }
+    _repeat(@repeat)when(@repeat = y){
+        background-repeat:repeat-y;
+    }
+    /**
+    _position(背景位置)使用方法如下：
+            
+        Selector{
+            $bg _position(top center);
+        }
+        
+    @method _repeat
+    @param {String} @position 背景位置
+    @for Global
+    */
+    _position(@position){
+        background-position:@position;
+    }
+    /**
+    _size(背景图片尺寸)使用方法如下：
+            
+        Selector{
+            $bg _size(60px 100px);
+        }
+        
+    @method _repeat
+    @param {String} @size 背景图片尺寸
+    @for Global
+    */
+    _size(@size){
+        background-size:@size;
+    }
+
+    /**
+    _origin(背景图片的定位区域)使用方法如下：
+            
+        Selector{
+            $bg _origin(border);
+        }
+        
+    @method _repeat
+    @param {String} @origin 背景图片尺寸
+    @for Global
+    */
+    _origin(@origin)when(@origin = border){
+        background-origin:border-box;
+    }
+    _origin(@origin)when(@origin = padding){
+        background-origin:padding-box;
+    }
+    _origin(@origin)when(@origin = content){
+        background-origin:content-box;
+    }
+    
+    /**
+    _clip(规定背景的绘制区域)使用方法如下：
+            
+        Selector{
+            $bg _clip(border);
+        }
+        
+    @method _repeat
+    @param {String} @origin 背景图片尺寸
+    @for Global
+    */
+    _clip(@clip)when(@origin = border){
+        background-clip:border-box;
+    }
+    _clip(@clip)when(@origin = padding){
+        background-clip:padding-box;
+    }
+    _clip(@clip)when(@origin = content){
+        background-clip:content-box;
+    }
+    
+}
+
+
+
+
+/**
+清除盒模型内浮动方法，使用方法如下：
+        
+    Selector{
+        _clearfix();
+    }
+    
+@method clearfix
+@for Global
+**/
+
+_clearfix(){
+    *zoom:1;
+    &:after{
+        content: "\0020"; display: block; height: 0; overflow: hidden; clear:both;
+    }
+}
+
+
+/**
+设置placeholder的字体颜色，使用方法如下：
+        
+    Selector{
+        placeholder(#333);
+    }
+    
+@method placeholder
+@param {Number} [@color: @inputPlaceholderColor] 默认值为@inputPlaceholderColor
+
+**/
+_placeholder(@color: @inputPlaceholderColor) {
+  &:-moz-placeholder            { color: @color; } // Firefox 4-18
+  &::-moz-placeholder           { color: @color; } // Firefox 19+
+  &:-ms-input-placeholder       { color: @color; } // Internet Explorer 10+
+  &::-webkit-input-placeholder  { color: @color; } // Safari and Chrome
+}
+/**
+_transform(变形) 使用方法如下：
+        
+    Selector{
+        _transform('rotate | scale | skew | translate');
+    }
+    
+@method _transform
+@param {String} @attr 
+@for Global
+**/
+
+_transform(@attr){
+    -moz-transform:@attr;
+    -webkit-transform:@attr;
+    -o-transform:@attr;
+    -ms-transform:@attr;
+    transform:@attr;
+}
+
+/**
+_transition(动画) 使用方法如下：
+        
+    Selector{
+        _transition(''<transition-property'> || <'transition-duration'> || <'transition-timing-function'> || <'transition-delay'> [, [<'transition-property'> || <'transition-duration'> || <'transition-timing-function'> || <'transition-delay'>');
+    }
+    
+@method _transform
+@param {String} @attr 
+@for Global
+**/
+
+_transition(@attr){
+    -moz-transition:e(@attr);
+    -webkit-transition:e(@attr);
+    -o-transition:e(@attr);
+    transition:e(@attr);
+}
+
+/**
+_animation(动画) 使用方法如下：
+        
+    Selector{
+        _animation('<animation-name> || <animation-duration> || <animation-timing-function> || <animation-delay> || <animation-iteration-count> || <animation-direction>] [, [<animation-name> || <animation-duration> || <animation-timing-function> || <animation-delay> || <animation-iteration-count> || <animation-direction>]');
+    }
+    
+@method _animation
+@param {String} @attr 
+@for Global
+**/
+_animation(@attr){
+    animation:@attr;
+    -moz-animation:@attr;
+    -webkit-animation:@attr;
+    -o-animation:@attr;
+}
+
+/**
+_@keyframes(动画) 使用方法如下：
+        
+_@keyframes();
+    
+@method _@keyframes
+@param {String} @name @attr 
+@for Global
+**/
+// _@keyframes(@name,@attr){
+//     @keyframes @name
+//     {
+//         e(@attr);
+//     }
+
+//     @-moz-keyframes @name
+//     {
+//         e(@attr);
+//     }
+
+//     @-webkit-keyframes @name
+//     {
+//         e(@attr);
+//     }
+
+//     @-o-keyframes @name
+//     {
+//         e(@attr);
+//     }
+// }
+
+/**
+_filter(高斯模糊) 使用方法如下：
+        
+    Selector{
+        _filter(3px)；
+    }
+    
+@method _filter
+@param {String} @attr 
+@for Global
+**/
+_filter(@attr){
+    -webkit-filter: blur(@attr);
+    -moz-filter: blur(@attr);
+    -o-filter: blur(@attr);
+    -ms-filter: blur(@attr);
+    filter: blur(@attr);
+}

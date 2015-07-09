@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>io-base</title>
+    <meta charset="utf-8" /></head>
+
+<body>
+
+<pre>
+   M.io({
+              url:"../test.json",//请求地址
+              params:{aa:"3333"},//传递参数
+          //timeout:3000,//请求超时时间设置
+              success:function(response){
+           //请求成功调用
+                var _data=JSON.parse(response.responseText);
+                alert(_data.code);
+              },
+              failure:function(response){
+             //请求失败调用
+            if(response.status==404){
+                M.log(response.statusText)
+            }
+              }
+          });
+
+
+          //get script
+          M.getScript("//html.yourmall.com/aj/test/cascading_json.js")
+
+
+ 后台返回数据格式:
+
+ {
+   code:10000,//10001失败
+   msg:"成功"
+ }
+</pre>
+
+</body>
+<script src="//r.xgimg.net/js/moui/1.0.5/mo.js?combine=true&debug=true&amp;mv=1.0.5&amp;v=100005"></script>
+<script>
+    Mo.require('io', function(M){
+          M.io({
+              url:"../test.json",//请求地址
+              params:{aa:"3333"},//传递参数
+         start:function(){
+           alert("starting")
+         },
+           method:"POST",//POST | GET
+          //timeout:3000,//请求超时时间设置
+              success:function(response){
+           //请求成功调用
+                var _data=JSON.parse(response.responseText);
+                alert(_data.code);
+              },
+              failure:function(response){
+             //请求失败调用
+            if(response.status==404){
+                M.log(response.statusText)
+            }
+              }
+          });
+
+          //get script
+          M.getScript("//html.yourmall.com/aj/test/test.js")
+
+
+    })
+</script>
+</html>

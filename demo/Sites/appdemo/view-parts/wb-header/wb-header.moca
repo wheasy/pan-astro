@@ -1,0 +1,53 @@
+.dr-wb-header{
+    position:absolute;
+    z-index: 10;
+    width: 100%;
+    min-height:4.5rem;
+    top:0;
+    left:0;
+    $display _box();
+    $display _box-align(center,justify);
+    $layout _align();
+    font-size:1.7rem;
+    padding:0 1rem;
+    background-color:#20232a;
+    color:#fff;
+    .back{
+        position:absolute;
+        top:50%; 
+        left:1rem;         
+        _transform(translate(0 , -50%));
+        width:18%;
+        z-index: 1;
+        vertical-align: middle;
+        span{
+        	font-size:2rem;
+            vertical-align:middle;
+        }
+        .m-icon{
+            vertical-align:middle;
+        }
+    }
+    .right-button{
+        position:absolute;
+        top:50%; 
+        right:1rem;         
+        z-index: 1;
+        _transform(translate(0 , -50%));
+        width:18%;
+        text-align:right;
+    }
+    .m-icon{
+        font-size:2.6rem;
+        margin-right:1rem;
+    }
+}
+.view-loaded .dr-wb-header{
+    position:fixed;
+}
+.ios7 .view-loaded .dr-header-bar{
+    position:relative;
+}
+.view-loaded.view-bizs-list .dr-header-bar,.view-loaded.view-biz-foods .dr-header-bar{
+    position:fixed;
+}

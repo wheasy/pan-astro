@@ -1,0 +1,179 @@
+/*
+    单页应用相关样式
+ */
+ //横竖屏样式
+.landscape-tips{
+    display:none;
+}
+.view-loading{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    _transform(translate(-50%, -50%));
+    font-size: 2rem;
+    text-align: center;
+}
+.view-loading p {
+  margin-top: 1rem;
+  font-size: 1.4rem;
+  color: #888;
+}
+.i-spinner {
+    display: inline-block;
+    color: #e7604a;
+    _animation('rotate' 1.5s linear infinite);
+    padding: 2px;
+    width:2rem;
+    height:2rem;
+    background:url("~/img/loading.png") no-repeat;
+    background-size:100%;
+}
+.mt-view{
+    z-index: 50;
+    left: 0;
+    position: fixed;
+    min-height: 100%;
+    width: 100%;
+    background: #ececec;
+    top: 0;
+}
+.view-loaded{
+    position: absolute;
+}
+// 视图进场和出场动画
+.mt-view-in{
+    transform: translateX(0) !important;
+    _animation(slideinfromright 0.3s ease-in-out 0 1 forwards) !important;
+}
+.mt-view-out{
+    transform: translateX(100%) !important;
+    _animation(slideouttoleft 0.3s ease-in 0 1 forwards) !important;
+}
+.mask{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 50;
+    background: rgba(0,0,0,0.8);
+    height: 100%;
+    width: 100%;
+}
+@-webkit-keyframes slideinfromright{
+    from{
+        -webkit-transform: translate3d(100%,0,0);
+    }
+    to{
+        -webkit-transform: translate3d(0,0,0);
+    }
+}
+@keyframes slideinfromright{
+    from{
+        transform: translateX(100%);
+    }
+    to{
+        transform: translateX(0);
+    }
+}
+@-webkit-keyframes slideinfromleft{
+    from{
+        -webkit-transform: translate3d(-100%,0,0);
+    }
+    to{
+        -webkit-transform: translate3d(0,0,0);
+        }
+    }
+@keyframes slideinfromleft{
+    from{
+        transform: translateX(-100%);
+    }
+    to{
+        transform: translateX(0);
+    }
+}
+@-webkit-keyframes slideouttoleft{
+    from{
+        -webkit-transform: translateX(0);
+    }
+    to{
+        -webkit-transform: translateX(100%);
+    }
+}
+@keyframes slideouttoleft{
+    from{
+        transform: translateX(0);
+    }
+    to{
+        transform: translateX(100%);
+    }
+}
+@-webkit-keyframes slideouttoright{
+    from{
+        -webkit-transform: translate3d(0,0,0);
+    }
+    to{
+        -webkit-transform: translate3d(100%,0,0);
+    }
+}
+@keyframes slideouttoright{
+    from{
+        transform: translateX(0);
+    }
+    to{
+        transform: translateX(100%);
+    }
+}
+@-webkit-keyframes 'rotate'{
+    0% {
+        -webkit-transform:rotate(0deg);
+    }
+    50% {
+        -webkit-transform:rotate(180deg);
+    }
+    100% {
+        -webkit-transform:rotate(360deg);
+    }
+}
+@-moz-keyframes 'rotate'{
+    0% {
+        -moz-transform:rotate(0deg);
+    }
+    50% {
+        -moz-transform:rotate(180deg);
+    }
+    100% {
+        -moz-transform:rotate(360deg);
+    }
+}
+@-ms-keyframes rotate{
+    0% {
+        -ms-transform:rotate(0deg);
+    }
+    50% {
+        -ms-transform:rotate(180deg);
+    }
+    100% {
+        -ms-transform:rotate(360deg);
+    }
+}
+@-o-keyframes rotate{
+    0% {
+      -o-transform:rotate(0deg);
+    }
+    50% {
+      -o-transform:rotate(180deg);
+    }
+    100% {
+      -o-transform:rotate(360deg);
+    }
+}
+@keyframes 'rotate'{
+    0% {
+        transform:rotate(0deg);
+    }
+    50% {
+        transform:rotate(180deg);
+    }
+    100% {
+        transform:rotate(360deg);
+    }
+}

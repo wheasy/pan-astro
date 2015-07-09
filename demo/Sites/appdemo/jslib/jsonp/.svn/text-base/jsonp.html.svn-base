@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>jsonp</title>
+    <meta charset="utf-8" /></head>
+
+<body>
+
+<pre>
+ 后台返回数据格式:
+
+ {
+   code:10000,//10001失败
+   msg:"成功"
+ }
+</pre>
+
+</body>
+<script src="//r.xgimg.net/js/moui/1.0.5/mo.js?combine=true&debug=true&amp;mv=1.0.5&amp;v=100005"></script>
+<script>
+    Mo.require('jsonp', function(M){
+           M.jsonp({
+           url:"//html.yourmall.com/aj/test/jsonp.php",
+           jsonpcallback:"isLogin_jsonpCallback",//自定义callback
+           params:{name:"saven"},
+           beforeSend:function(){
+              //执行前事件TODO
+           },
+           success:function(data.json){
+           if(data.code==10000){
+               alert('成功');
+           }else{
+               alert('失败');
+           }
+        }})
+    })
+</script>
+</html>

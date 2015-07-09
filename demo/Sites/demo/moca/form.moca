@@ -1,0 +1,279 @@
+$form _btnbase();
+/**
+    button调用时严格遵守以下形式：
+
+    _getbtn(@selector,@size,@btnWidth,@type);
+
+    @author zhouyu
+    @module element
+    @class $icon
+    @param {String} @selector 按钮名字
+    @param {String} @size 按钮型号s,n,m,l...
+    @param {String} @btnWidth 按钮宽度默认为auto
+    @param {String} @type 按钮类型 默认为0，1为左边带icon，2为右边带icon的
+**/
+_getbtn(@selector,@size:n,@btnWidth:auto,@type:0){
+	_selector(@selector) when(@selector = define ){
+		@bgColor:#66bbec;  //按钮背景颜色
+		@fontColor:#fff;  //按钮字体颜色
+		@boxShadow:0; //按钮阴影 不需要写0
+		@txtShadow:0;  //字体阴影 不需要写0
+		@borderC:none; //按钮边线颜色
+		@linear:0;     //按钮渐变背景 传参时加'',不需要写0
+		@radius:5px;   //按钮圆角
+		@borderW:0; //按钮边线宽度
+		@hoverBgC:#5ba7d4; //触发背景色
+	}
+	_selector(@selector) when(@selector = refuse ){
+		@bgColor:#d4dadf;  //按钮背景颜色
+		@fontColor:#fff;  //按钮字体颜色
+		@boxShadow:0; //按钮阴影 不需要写0
+		@txtShadow:0;  //字体阴影 不需要写0
+		@borderC:none; //按钮边线颜色
+		@linear:0;     //按钮渐变背景 传参时加'',不需要写0
+		@radius:5px;   //按钮圆角
+		@borderW:0; //按钮边线宽度
+		@hoverBgC:#c9d0d6; //触发背景色
+	}
+	_selector(@selector) when(@selector = replay ){
+		@bgColor:#28b76c;  //按钮背景颜色
+		@fontColor:#fff;  //按钮字体颜色
+		@boxShadow:0; //按钮阴影 不需要写0
+		@txtShadow:0;  //字体阴影 不需要写0
+		@borderC:none; //按钮边线颜色
+		@linear:0;     //按钮渐变背景 传参时加'',不需要写0
+		@radius:5px;   //按钮圆角
+		@borderW:0; //按钮边线宽度
+		@hoverBgC:#239e5e; //触发背景色
+		@LBorderColor:#239e5e;//右侧icon左边线
+	}
+	_selector(@selector) when(@selector = replay-w ){
+		@bgColor:#fff;  //按钮背景颜色
+		@fontColor:#28b76c;  //按钮字体颜色
+		@boxShadow:0; //按钮阴影 不需要写0
+		@txtShadow:0;  //字体阴影 不需要写0
+		@borderC:#28b76c; //按钮边线颜色
+		@linear:0;     //按钮渐变背景 传参时加'',不需要写0
+		@radius:5px;   //按钮圆角
+		@borderW:1px; //按钮边线宽度
+		@hoverBgC:#28b76c; //触发背景色
+		@LBorderColor:#28b76c;//右侧icon左边线
+	}
+	_selector(@selector) when(@selector = touch ){
+		@bgColor:#fff;  //按钮背景颜色
+		@fontColor:#768595;  //按钮字体颜色
+		@boxShadow:0; //按钮阴影 不需要写0
+		@txtShadow:0;  //字体阴影 不需要写0
+		@borderC:#768595; //按钮边线颜色
+		@linear:0;     //按钮渐变背景 传参时加'',不需要写0
+		@radius:5px;   //按钮圆角
+		@borderW:1px; //按钮边线宽度
+		@hoverBgC:#bdc7d5; //触发背景色
+	}
+	_selector(@selector) when(@selector = buy ){
+		@bgColor:#66bbec;  //按钮背景颜色
+		@fontColor:#fff;  //按钮字体颜色
+		@boxShadow:0; //按钮阴影 不需要写0
+		@txtShadow:0;  //字体阴影 不需要写0
+		@borderC:none; //按钮边线颜色
+		@linear:0;     //按钮渐变背景 传参时加'',不需要写0
+		@radius:0;   //按钮圆角
+		@borderW:0; //按钮边线宽度
+		@hoverBgC:#5ba7d4; //触发背景色
+	}
+	_selector(@selector) when(@selector = cart ){
+		@bgColor:#259fe5;  //按钮背景颜色
+		@fontColor:#fff;  //按钮字体颜色
+		@boxShadow:0; //按钮阴影 不需要写0
+		@txtShadow:0;  //字体阴影 不需要写0
+		@borderC:none; //按钮边线颜色
+		@linear:0;     //按钮渐变背景 传参时加'',不需要写0
+		@radius:0;   //按钮圆角
+		@borderW:0; //按钮边线宽度
+		@hoverBgC:#218dcc; //触发背景色
+	}
+
+	_selector(@selector);
+
+
+
+	_size(@size) when (@size = s){
+		@fontSize:1.4rem;
+		@width:@btnWidth;
+		@height:3.4rem;
+		@padding:1rem 0.8rem;
+	}
+	_size(@size) when (@size = n){
+		@fontSize:1.4rem;
+		@width:@btnWidth;
+		@height:4rem;
+		@padding:1.1rem 2rem 1.2rem;
+	}
+	_size(@size) when (@size = m){
+		@fontSize:1.6rem;
+		@width:@btnWidth;
+		@height:4.4rem;
+		@padding:1.6rem 2rem 1.4rem;
+	}
+	_size(@size) when (@size = l){
+		@fontSize:1.7rem;
+		@width:@btnWidth;
+		@height:4.5rem;
+		@padding:1.3rem 0;
+	}
+	_size(@size);
+
+    .btn-@{selector}-@{size},a.btn-@{selector}-@{size}{
+		$text _nospaceitem();
+		line-height:normal;
+	    $form _btn(@bgColor,@fontColor,@boxShadow,@txtShadow,@borderC,@linear,@width,@height,@padding,@radius,@borderW,@fontSize);
+		&.disabled,&[disabled]{
+			background-color:#d4d4d4;
+			color:#ededed;
+			border-width:0;
+		}
+	    .m-icon{
+	        vertical-align:middle;
+	    }
+	    _type(@type) when (@type = 0),(@type = 1){
+		    .m-icon{
+		        margin-right:0.5rem;
+		    }
+		}
+	    _type(@type) when (@type = 1){
+		    &:focus,&:hover,&:active{
+		    	background-color:@hoverBgC;
+		    }
+		    &.disabled:focus,&.disabled:hover,&[disabled]:active,&[disabled]:hover,&.disabled:active,&[disabled]:focus{
+		    	background-color:#d4d4d4;
+		    }
+		}
+	    _type(@type) when (@type = 2){
+	    	position:relative;
+	    	padding-right:6rem;
+		    span{
+				position:absolute;
+				width:4rem;
+				height:100%;
+				line-height:1.8;
+				right:0;
+				top: 0;
+				vertical-align:middle;
+				text-align:center;
+				border-left:1px solid @LBorderColor;
+				font-size:2rem;
+		    }
+		}
+		_type(@type);
+	}
+
+}
+/**
+    button调用时严格遵守以下形式：
+
+    _getinput(@width:100%);
+
+    @author zhouyu
+    @module element
+    @class $icon
+    @param {String} @selector 按钮名字
+    @param {String} @size 按钮型号s,n,m,l...
+    @param {String} @btnWidth 按钮宽度默认为auto
+    @param {String} @type 按钮类型 默认为0，1为左边带icon，2为右边带icon的
+**/
+_getinput(@width:100%,@type:0,@borderHover:0){
+	@width:100%;
+	@height:4rem;
+	@padding:0.4rem 1rem 0.6rem;
+	@borderColor:rgba(220,220,220,0.5);
+	@borderW:1px;
+	@bgColor:#fafafa;
+	@fontSize:1.4rem;
+	@shadow:0;
+	@radius:5px;
+	@color:#344b5b;
+	$form _input(@width,@height,@padding,@borderColor,@borderW,@bgColor,@fontSize,@color,@shadow,@radius);
+	.m-ipt{
+ 		$box _line(@Be7e7e7, 2 stretch,rgba(231,231,231,0.7),1px 1px 1px 1px);
+	}
+	_type(@type)when(@type=1){
+		.input-ico{
+			position:relative;
+			display:inline-block;
+			width:@width;
+			label{
+				position:absolute;
+				top:1px;
+				left:1px;
+				display:inline-block;
+				width:4rem;
+				height:100%-5px;
+				background-color:#f0f3f5;
+				$box _radius-tl(5px);
+				$box _radius-bl(5px);
+		 		$box _line(@Be7e7e7, 2 stretch,rgba(231,231,231,0.7),0 1px 0 0);
+				font-size:1.8rem;
+				line-height:4rem;
+				color:#8b9fb6;
+				text-align:center;
+			}
+			a{
+				position:absolute;
+		        top:0;          
+		        right:0;
+		        width:3rem;
+		        height:100%;
+		        font-size:1.5rem;
+		        color:#d4d4d4;
+		        display:block;
+		        text-align:center;
+		        vertical-align: middle;
+		        padding-top:1rem;
+			}
+			.m-ipt{
+				height:4rem;
+				padding-left:5rem;
+				padding-right:3rem;
+				_boderHover(@borderHover)when(@borderHover=0){
+					&:focus{
+						border:1px solid #768595;
+					}
+				}
+				_boderHover(@borderHover);
+			}
+		}
+	}
+	_type(@type);
+}
+_getsearch(@width:100%){
+	@width:100%;
+	@height:3rem;
+	@padding:0.4rem 1rem 0.6rem 3rem;
+	@borderColor:rgba(220,220,220,0.5);
+	@borderW:1px;
+	@bgColor:#fafafa;
+	@fontSize:1.4rem;
+	@shadow:0;
+	@radius:5px;
+	@color:#344b5b;
+	.search{
+		display:inline-block;
+	    position: relative;
+	    width:@width;
+		$form _input(@width,@height,@padding,@borderColor,@borderW,@bgColor,@fontSize,@color,@shadow,@radius);
+	    .m-ipt{
+	    	width:100%;
+	    }
+	    .m-icon{
+	    	vertical-align:middle;
+	    }
+	    label{  
+	        position:absolute;
+	        top:50%;          
+	        left:0.7rem;
+	        _transform(translate(0 , -50%));
+	        font-size:2rem;
+	        color:@inputBdDisabledColor;
+	    }
+	}  
+}

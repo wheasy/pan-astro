@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset=UTF-8>
+        <title>drag plugin</title>
+    </head>
+    <style>
+        #demo{background:#8DD5E7;border:1px solid black;width:100px;height:100px;cursor:move;position:absolute;}
+        #boundary{border:2px solid red;padding:50px;height:200px;}
+    </style>
+    <body>
+        <div id="boundary">
+            <div id="demo"></div>
+        </div>
+        <p>占位</p>
+
+        <script src="http://r.xgimg.net/js/moui/1.0.5/mo.js?combine=true&debug=true&amp;mv=1.0.5&amp;v=788989"></script>
+        <script>
+            Mo.require('drag-plugin', function(M) {
+                var demo = M.one('#demo');
+                demo.plug(M.Plugin.Drag, {
+                    boundary: '#boundary',
+                    direction: '', //x,y
+                }).drag.on('drag:start',function(e){
+                });
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,9 @@
+<div>{{content}}</div>
+<div class="mf-operate">
+    {{if !!yesText}}
+        <a href="javascript:;" class="m-btn btn-normal btn-ok" data-role="yes">{{yesText}}</a>
+    {{/if}}
+    {{if !!cancelText}}
+        <a href="javascript:;" class="m-btn btn-normal btn-default" data-role="cancel">{{cancelText}}</a>
+    {{/if}}
+</div>

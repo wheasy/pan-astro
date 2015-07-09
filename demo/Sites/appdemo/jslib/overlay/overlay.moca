@@ -1,0 +1,7 @@
+.overlay{
+    position: absolute;
+    padding:5px;
+    border: 1px solid #dedede;
+    width:500px;
+    height: 200px;
+}

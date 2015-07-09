@@ -1,0 +1,29 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <title>autocomplete </title>
+        <meta charset="utf-8" /></head>
+        <style type="text/css">
+            .opt-active{
+                color:red;
+            }
+        </style>
+    <body>
+    <div style="padding:100px 0 0 100px">
+        <input data-role="ac" />
+    </div>
+    <script src="//r.xgimg.net/js/moui/1.0.5/mo.js?combine=true&debug=true&amp;mv=1.0.5&amp;v=788989"></script>
+    <script type="text/javascript">
+        Mo.require('autocomplete-plugin', function(M) {
+            //M.role('ac').plug([M.Plugin.Autocomplete]);
+            M.role('ac').plug([{
+                fn: M.Plugin.Autocomplete,
+                cfg:{
+                    io:'/aj/xg/autocomplete.json'
+                }
+            }]);
+        });
+    </script>
+    </body>
+</html>

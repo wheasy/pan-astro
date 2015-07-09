@@ -1,0 +1,505 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>switchable</title>
+        <link type="text/css" rel="stylesheet" href="css/switchable.css" />
+    </head>
+
+    <body>
+        <h2>Tabs 切换组件</h2>
+        <div id="demo1" class="section">
+            <ul class="tab-nav">
+                <li class="active">标题 A</li>
+                <li>标题 B</li>
+                <li>标题 C</li>
+                <li>标题 D</li>
+                <li>标题 E</li>
+            </ul>
+            <div class="moui-switchable-content">
+                <div style="display: block;">标题 A内容</div>
+                <div style="display: none; ">index = 1</div>
+                <div style="display: none; ">index = 2</div>
+                <div style="display: none">内容 D</div>
+                <div style="display: none">index = 4</div>
+            </div>
+        </div>
+
+        <pre>实现代码：
+var demo1 = M.one('#demo1');
+demo1.plug([
+    {
+        fn:M.Plugin.Switchable, cfg:{
+            navCls: 'tab-nav',
+            triggerType: 'hover'
+        }
+    }
+]).switchable.on('beforeSwitch',function(e) {
+    //console.log(e)
+    //console.log('beforeSwitch');
+}).on('afterSwitch',function(e) {
+    //console.log(e)
+    //console.log('afterSwitch');
+});
+
+        </pre>
+
+        <h2>Slider 组件</h2>
+
+        <div id="demo2" class="section loading">
+            <ol class="moui-switchable-content">
+                <li><a href="#" ><img src="img/slider-img1.jpg" /></a></li>
+                <li class="hidden"><a href="#" ><img data-src="img/slider-img2.jpg" /></a></li>
+                <li class="hidden"><a href="#" ><img data-src="img/slider-img3.jpg" /></a></li>
+                <li class="hidden"><a href="#" ><img data-src="img/slider-img4.jpg" /></a></li>
+                <li class="hidden"><a href="#" ><img data-src="img/slider-img5.jpg" /></a></li>
+            </ol>
+            <ul class="moui-switchable-nav">
+                <li class="active">1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+            </ul>
+        </div>
+
+        <pre>实现代码：
+var demo2 = M.one('#demo2');
+demo2.plug([
+    {
+        fn:M.Plugin.Switchable, cfg:{
+            autoplay: false, pauseOnHover:true, interval: 2,  circle: true,touch:true
+        }
+    },
+    {
+        fn:M.Plugin.SwitchableEffect, cfg:{
+            relateType:"switchable",effect:'scrollY',duration:0.2
+        }
+    },
+    {
+        fn:M.Plugin.SwitchableLazyLoad, cfg:{
+            relateType:"switchable",lazyload: true, lazyDataType:'data-src'
+        }
+    }
+]).switchable.on('beforeSwitch',function(e) {
+    //console.log(e)
+    //console.log('beforeSwitch');
+}).on('afterSwitch',function(e) {
+    //console.log(e)
+    //console.log('afterSwitch');
+});
+
+        </pre>
+
+        <h2>图片文字广告</h2>
+        <div id="demo3" class="section">
+            <div class="moui-switchable-content">
+                <p class="active"><a href="#"><img src="img/59e5194738d5a71869d9109b457d554a.jpg"></a></p>
+                <p ><a href="#"><img src="img/75ecf47c041778f4271b2a8fe978322e.jpg"></a></p>
+                <p ><a href="#"><img src="img/414cc9a743bc5923189535b59c00c10e.jpg"></a></p>
+
+                <p ><a href="#"><img src="img/501bb0c35d1f300a1fb78b28cd1e5929.jpg"></a></p>
+                <p ><a href="#"><img src="img/63e32154522a7fb6a89b78cd4f9b0876.jpg"></a></p>
+                <p ><a href="#"><img src="img/ec26c2d603459f73d1a46713ce88abce.jpg"></a></p>
+
+            </div>
+
+            <ul class="moui-switchable-nav">
+                <li class="active"><a href="#">新品限时抢</a></li>
+                <li><a href="#">夏日冰凉价</a></li>
+
+                <li><a href="#">父亲节特惠</a></li>
+                <li><a href="#">T恤99两件</a></li>
+                <li><a href="#">父亲节礼物</a></li>
+                <li><a href="#">千件秒杀</a></li>
+            </ul>
+        </div>
+
+        <pre>实现代码：
+var demo3 = M.one('#demo3')
+demo3.plug([
+    {
+        fn:M.Plugin.Switchable, cfg:{
+            autoplay: true,
+            triggerType: 'hover',
+            pauseOnHover: true,
+            duration: 0.8,
+            delay: 0.2
+        }
+    },
+    {
+        fn:M.Plugin.SwitchableEffect, cfg:{
+            relateType: 'switchable',
+            effect: 'fade'
+        }
+    }
+]).switchable.on('beforeSwitch',function(e) {
+    //console.log(e)
+    //console.log('beforeSwitch');
+}).on('afterSwitch',function(e) {
+    //console.log(e)
+    //console.log('afterSwitch');
+});
+
+        </pre>
+
+        <h2>图片浏览（初始时，第2、3页的图片都没有请求加载，实现了按需加载）</h2>
+
+        <div id="demo4" class="section scrollable">
+            <span id="scroller-prev" class="prev">&lsaquo; 上一页</span>
+
+            <span id="scroller-next" class="next">下一页 &rsaquo;</span>
+            <div class="scroller">
+                <div class="moui-switchable-content">
+
+                    <img src="img/imgview1.jpg" />
+                    <img src="img/imgview2.jpg" />
+                    <img src="img/imgview3.jpg" />
+                    <img src="img/imgview4.jpg" />
+                    <img src="img/imgview5.jpg" />
+
+                    <img data-src="img/imgview6.jpg" />
+                    <img data-src="img/imgview7.jpg" />
+                    <img data-src="img/imgview8.jpg" />
+                    <img data-src="img/imgview9.jpg" />
+                    <img data-src="img/imgview10.jpg" />
+
+                    <img data-src="img/imgview11.jpg" />
+                    <img data-src="img/imgview12.jpg" />
+                    <img data-src="img/imgview13.jpg" />
+                    <img data-src="img/imgview14.jpg" />
+                    <img data-src="img/imgview15.jpg" />
+                </div>
+                <ul class="moui-switchable-nav">
+                    <li class="active">&bull;</li>
+                    <li>&bull;</li>
+                    <li>&bull;</li>
+                </ul>
+            </div>
+        </div>
+
+        <pre>实现代码：
+var demo4 = M.one('#demo4');
+demo4.plug([
+    {
+        fn:M.Plugin.Switchable, cfg:{
+            step: 5,
+            viewSize: [680]
+        }
+    },
+    {
+        fn:M.Plugin.SwitchableEffect, cfg:{
+            relateType: 'switchable',
+            effect: 'scrollX'
+        }
+    },
+    {
+        fn:M.Plugin.SwitchableLazyLoad, cfg:{
+            relateType:"switchable",
+            lazyload: true,
+            lazyDataType:'data-src'
+        }
+    }
+]);
+M.one('#scroller-prev').on('click',function(e){
+    demo4.switchable.prev();
+});
+M.one('#scroller-next').on('click',function(e){
+    demo4.switchable.next();
+});
+        </pre>
+
+        <h2>自动滚动文字广告</h2>
+
+        <div id="demo5" class="scroll-news">
+            <ul class="news-items moui-switchable-content">
+                <li><a href="#">yunmall购物平台</a></li>
+                <li><a href="#">开通网银，为您一路护航</a></li>
+                <li><a href="#">新手买家？帮助教程带您走通</a></li>
+                <li><a href="#">尽情挥洒你的创意</a></li>
+                <li><a href="#">认准标识，精选实力卖家任您选择</a></li>
+                <li><a href="#">收藏</a> + <a href="#">购物车</a>，逛街搜店更便捷</li>
+            </ul>
+        </div>
+
+        <pre>实现代码：
+var demo5 = M.one('#demo5');
+demo5.plug([
+    {
+        fn:M.Plugin.Switchable, cfg:{
+            hasTrigger: false,
+            autoplay: true,
+            circle: true
+        }
+    },
+    {
+        fn:M.Plugin.SwitchableEffect, cfg:{
+            relateType: 'switchable',
+            effect: 'scrollY'
+        }
+    }
+]);
+        </pre>
+
+        <h2>大小图加文字描述新闻</h2>
+
+        <div id="slideFocus">
+            <div class="h">
+                <h3>今日焦点视频</h3>
+
+            </div>
+            <div class="c">
+                <div class="pic loading">
+                    <ul class="pic-list moui-switchable-content">
+                        <li><a href="#"><img src="img/compleximg1.jpg"/></a></li>
+                        <li><a href="#"><img src="img/compleximg2.jpg"/></a></li>
+                        <li><a href="#"><img src="img/compleximg3.jpg"/></a></li>
+                        <li><a href="#"><img src="img/compleximg4.jpg"/></a></li>
+                        <li><a href="#"><img src="img/compleximg5.jpg"/></a></li>
+                        <li><a href="#"><img src="img/compleximg6.jpg"/></a></li>
+                    </ul>
+                </div>
+                <div class="txt">
+                    <ul class="desc-list">
+                        <li style="display: block">
+                        <h4><a title="《神话》热播 第05集21:10分上线" href="#">《神话》热播 第05集21:10分上线</a></h4>
+                        <p>秦代的刑场上，一个身着奇装异服的年轻人从天而降，众将士议论纷纷，不敢近前，不知是叛贼来劫法场，还是神仙妖孽下凡……</p>
+
+                        </li>
+                        <li style="display: none">
+                        <h4><a href="#">2010年第一场强降雪飘落京城</a></h4>
+                        <p>继昨日凌晨降下新年首场小雪，今日首场强降雪飘落京城，据气象台预计雪后北京将降温至-16℃，这也将创下近40年来的最低温记录。</p>
+                        </li>
+                        <li style="display: none">
+                        <h4><a  href="#">娱乐圈丑闻 导演张一白吸毒被抓</a></h4>
+
+                        <p>正拍摄《杜拉拉升职记》的导演张一白因吸毒被抓，据传是其捧红的徐静蕾“告密”，衣食无忧、事业有成的明星，为何屡屡曝出吸毒丑闻？</p>
+                        </li>
+                        <li style="display: none">
+                        <h4><a  href="#">詹姆斯-卡梅隆传奇巨制《阿凡达》</a></h4>
+                        <p>曾因《泰坦尼克号》创造过票房记录的好莱坞导演詹姆斯-卡梅隆，经过了14年的酝酿，耗资4亿美元拍制的科幻巨献《阿凡达》将于4日在中国上映！</p>
+                        </li>
+                        <li style="display: none">
+
+                        <h4><a  href="#">2009年大学生十大杯具事件</a></h4>
+                        <p>从70岁老教授潜规则艺校女生，到上海贫困女硕士自杀，09年发生在大学生身上的是非真是多得来令人惊诧，除了心酸就只有“杯具”了。</p>
+                        </li>
+                        <li style="display: none">
+                        <h4><a  href="#">尚周刊 第三期</a></h4>
+                        <p>全新《尚周刊》在新年里与大家新鲜见面。简约是本周最IN的街头风！闪亮派对妆是每个潮女必备美妆术！想了解更多时尚资讯来《尚周刊》！</p>
+                        </li>
+
+                    </ul>
+                    <ul class="thumbs-list moui-switchable-nav">
+                        <li class="active"><img width="84" height="62" src="img/compleximg-thumbs1.jpg"/></li>
+                        <li><img width="84" height="62" src="img/compleximg-thumbs2.jpg"/></li>
+                        <li><img width="84" height="62" src="img/compleximg-thumbs3.jpg"/></li>
+                        <li><img width="84" height="62" src="img/compleximg-thumbs4.jpg"/></li>
+                        <li><img width="84" height="62" src="img/compleximg-thumbs5.jpg"/></li>
+                        <li><img width="84" height="62" src="img/compleximg-thumbs6.jpg"/></li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+
+        <pre>实现代码：
+var slideFocus = M.one('#slideFocus');
+slideFocus.plug([
+{
+    fn:M.Plugin.Switchable, cfg:{
+        autoplay: true,
+        circle: true
+    }
+},
+{
+    fn:M.Plugin.SwitchableEffect, cfg:{
+        relateType: 'switchable',
+        effect: 'scrollX'
+    }
+}
+]).switchable.on('beforeSwitch',function(e){
+    M.all('.desc-list li').each(function(li, index){
+        li.setStyle('display', index == e.toIndex ? 'block' : 'none');
+    });
+});
+        </pre>
+
+        <h2>类似qq的折叠效果</h2>
+
+        <div id="accordion" class="section">
+            <div class="moui-switchable-nav active"><i class="able-icon"></i><span>标题A</span></div>
+
+            <div class="moui-switchable-content">
+                内容A
+            </div>
+            <div class="moui-switchable-nav"><i class="able-icon"></i><span>标题B</span></div>
+            <div class="moui-switchable-content" style="display:none;">内容B<br/>内容B<br/>内容B</div>
+            <div class="moui-switchable-nav"><i class="able-icon"></i><span>标题C</span></div>
+
+            <div class="moui-switchable-content" style="display:none;">内容C<br/>内容C<br/>内容C<br/>内容C<br/>内容C</div>
+            <div class="moui-switchable-nav"><i class="able-icon"></i><span>标题D</span></div>
+            <div class="moui-switchable-content" style="display:none;">内容D<br/>内容D<br/>内容D</div>
+        </div>
+
+        <pre>实现代码：
+        </pre>
+
+        <script src="http://r.xgimg.net/js/moui/1.0.5/mo.js?combine=true&debug=true&amp;mv=1.0.5&amp;v=788989"></script>
+        <script>
+            Mo.require('switchable-plugin,switchable-effect-plugin,switchable-lazyload-plugin', function(M) {
+                var demo1 = M.one('#demo1');
+                demo1.plug([
+                    {
+                        fn:M.Plugin.Switchable, cfg:{
+                            navCls: 'tab-nav',
+                            triggerType: 'hover'
+                        }
+                    }
+                ]).switchable.on('beforeSwitch',function(e) {
+                    //console.log(e)
+                    //console.log('beforeSwitch');
+                }).on('afterSwitch',function(e) {
+                    //console.log(e)
+                    //console.log('afterSwitch');
+                });
+
+
+                var demo2 = M.one('#demo2');
+                demo2.plug([
+                    {
+                        fn:M.Plugin.Switchable, cfg:{
+                            autoplay: false, pauseOnHover:true, interval: 2,  circle: true,touch:true
+                        }
+                    },
+                    {
+                        fn:M.Plugin.SwitchableEffect, cfg:{
+                            relateType:"switchable",effect:'scrollY',duration:0.2
+                        }
+                    },
+                    {
+                        fn:M.Plugin.SwitchableLazyLoad, cfg:{
+                            relateType:"switchable",lazyload: true, lazyDataType:'data-src'
+                        }
+                    }
+                ]).switchable.on('beforeSwitch',function(e) {
+                    //console.log(e)
+                    //console.log('beforeSwitch');
+                }).on('afterSwitch',function(e) {
+                    //console.log(e)
+                    //console.log('afterSwitch');
+                });
+
+
+                var demo3 = M.one('#demo3')
+
+                demo3.plug([
+                    {
+                        fn:M.Plugin.Switchable, cfg:{
+                            autoplay: true,
+                            triggerType: 'hover',
+                            pauseOnHover: true,
+                            duration: 0.8,
+                            delay: 0.2
+                        }
+                    },
+                    {
+                        fn:M.Plugin.SwitchableEffect, cfg:{
+                            relateType: 'switchable',
+                            effect: 'fade'
+                        }
+                    }
+                ]).switchable.on('beforeSwitch',function(e) {
+                    //console.log(e)
+                    //console.log('beforeSwitch');
+                }).on('afterSwitch',function(e) {
+                    //console.log(e)
+                    //console.log('afterSwitch');
+                });
+
+
+                var demo4 = M.one('#demo4');
+                demo4.plug([
+                    {
+                        fn:M.Plugin.Switchable, cfg:{
+                            step: 5,
+                            viewSize: [680]
+                        }
+                    },
+                    {
+                        fn:M.Plugin.SwitchableEffect, cfg:{
+                            relateType: 'switchable',
+                            effect: 'scrollX'
+                        }
+                    },
+                    {
+                        fn:M.Plugin.SwitchableLazyLoad, cfg:{
+                            relateType:"switchable",
+                            lazyload: true,
+                            lazyDataType:'data-src'
+                        }
+                    }
+                ]);
+                M.one('#scroller-prev').on('click',function(e){
+                    demo4.switchable.prev();
+                });
+                M.one('#scroller-next').on('click',function(e){
+                    demo4.switchable.next();
+                });
+
+
+                var demo5 = M.one('#demo5');
+                demo5.plug([
+                    {
+                        fn:M.Plugin.Switchable, cfg:{
+                            hasTriggers: false,
+                            autoplay: true,
+                            circle: true
+                        }
+                    },
+                    {
+                        fn:M.Plugin.SwitchableEffect, cfg:{
+                            relateType: 'switchable',
+                            effect: 'scrollY'
+                        }
+                    }
+                ]);
+
+
+                var slideFocus = M.one('#slideFocus');
+                slideFocus.plug([
+                    {
+                        fn:M.Plugin.Switchable, cfg:{
+                            autoplay: true,
+                            circle: true
+                        }
+                    },
+                    {
+                        fn:M.Plugin.SwitchableEffect, cfg:{
+                            relateType: 'switchable',
+                            effect: 'scrollX'
+                        }
+                    }
+                ]).switchable.on('beforeSwitch',function(e){
+                    M.all('.desc-list li').each(function(li, index){
+                        li.setStyle('display', index == e.toIndex ? 'block' : 'none');
+                    });
+                });
+
+                var accordion = M.one('#accordion');
+                accordion.plug([
+                    {
+                        fn:M.Plugin.Switchable, cfg:{
+                            type: 'accordion',
+                            triggerType: 'hover'
+                        }
+                    }
+                ]);
+
+                /*
+
+                */
+            })
+        </script>
+    </body>
+</html>

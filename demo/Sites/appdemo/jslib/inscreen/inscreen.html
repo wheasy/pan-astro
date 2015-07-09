@@ -1,0 +1,72 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <title>Untitled </title>
+        <meta charset="utf-8" />
+        <style type="text/css">
+            .lazy-img, .lazy-img2{
+                background:url(lazy-img.gif) center no-repeat #dedede;
+                width:100px;
+                height:100px;
+            }
+
+            .lazy-img2{
+                visibility:visible;
+            }
+        </style>
+    </head>
+<body>
+
+    <img class="lazy-img" data-src="P30612-195240.jpg" src="t.gif" />
+
+        <img class="lazy-img2" data-src="P30612-195240.jpg" style="width:100px;height:100px;" src="t.gif" />
+        <img class="lazy-img2" data-src="P30612-195240.jpg" style="width:100px;height:100px;" src="t.gif" />
+        <img class="lazy-img2" data-src="P30612-195240.jpg" style="width:100px;height:100px;" src="t.gif" />
+        <img class="lazy-img2" data-src="P30612-195240.jpg" style="width:100px;height:100px;" src="t.gif" />
+        <img class="lazy-img2" data-src="P30612-195240.jpg" style="width:100px;height:100px;" src="t.gif" />
+
+    <div style="height:1000px;"></div>
+
+
+
+    <img data-role="lazy" data-src="http://imgphoto.gmw.cn/attachement/jpg/site2/20130705/4437e612ee941340511d60.jpg" />
+    <div style="height:1000px;"></div>
+    <textarea id="textarea" class="data-area" rows="8" cols="40">
+        <p>hello textarea</p>
+    </textarea>
+    <div style="height:1000px;"></div>
+    <div style="height:1000px;"></div>
+
+
+    <span id="loading"></span>
+    <script src="//r.xgimg.net/js/moui/1.0.5/mo.js?combine=true&debug=true&amp;mv=1.0.5&amp;v=788989"></script>
+    <script type="text/javascript">
+        Mo.require('lazyloader', function(M) {
+
+
+            //M.LazyLoad.watch(M.one('img'));
+
+            //M.LazyLoad.watch(M.one('#textarea'));
+
+
+//console.log(M.one(window.document).scrollIntoView(true))
+
+            M.LazyLoad.watch({
+                target:M.one('#loading'),
+                fn:function(ele, rgn, wrgn ) {
+                        ele.insertBefore('加载了<div style="height:1000px;"></div>')
+                        //return false;
+                    }
+                });
+
+
+
+
+            //M.LazyLoad.push({
+                //target:S.role('lazy'),
+            //})
+        })
+    </script>
+</body>
+</html>

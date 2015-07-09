@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>event-base</title>
+    </head>
+
+    <body>
+
+
+        <form>
+            <button type="button" id="demo">CLICK</button>
+        </form>
+        <script src="http://r.xgimg.net/js/moui/1.0.5/mo.js?combine=true&debug=true&amp;mv=1.0.5&amp;v=788989"></script>
+        <script>
+            Mo.require('node', function(M) {
+                M.one("#demo").on('click',function(e){
+                   var self=e.currentTarget;
+                   self.setStyle("color","red");
+                })
+            })
+        </script>
+    </body>
+</html>

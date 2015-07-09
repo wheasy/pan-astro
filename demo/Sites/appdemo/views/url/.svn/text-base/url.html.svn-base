@@ -1,0 +1,2 @@
+<span mt-href="/demo">demo</span>
+页面参数是：{{params}}

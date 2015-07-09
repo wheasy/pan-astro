@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+    <title>MoUI - Overlay</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="http://r.xgimg.net/~?f=lib/container/demo" />
+    </head>
+      <style type="text/css">
+           select{
+                width: 120px
+            }
+        </style>
+
+<body>
+坐标位置：
+x坐标:<input type=text id="x" value="1" />
+y坐标:<input type=text id="y" value="1" />
+  <button class="a" id="btn">显示overlay</button>
+  <button class="a" id="btnclose">隐藏overlay</button>
+  <button class="a" id="btnpos">overlay位置</button>
+
+  <br><br>
+  <center><select data-role="select"><option value="tl">上左  tl</option><option value="tr">上右  br</option><option value="tm">上中  tm</option><option value="bl">下左  bl</option><option value="bm">下中  bm</option><option value="br">下右  br</option><option value="lt">左上  lt</option><option value="rt">右上  rt</option><option value="lb">左下  lb</option><option value="rb">右下  rb</option><option value="lm">左中  lm</option><option value="rm">右中  rm</option></select><button class="a" id="btnpop">3秒浮层</button><button class="a" id="btnpop2">3秒浮层</button>
+  </center>
+
+
+</body>
+<script src="//r.xgimg.net/js/moui/1.0.5/mo.js?combine=true&debug=true&amp;mv=1.0.5&amp;v=788989"></script>
+
+<script>
+    Mo.require('button-plugin,overlay,select', function(M){
+
+    M.role("select").plug([
+                {
+                    fn:M.Plugin.OptionList
+                },
+                {
+                    fn:M.Plugin.Select
+                }
+            ])
+
+
+
+
+   M.all(".a").plug(M.Plugin.Button, {
+                    type : 'light', //light,gray 不配置默认 light
+                    size : 'normal' //normal,small 不配置默认 normal
+                })
+
+        var OverlayDemo = new M.Overlay({
+        autoCenter:true,
+        autoRender:true,
+        content:"HelloWorld"//,
+         //  renderTo:"body"
+        });
+     OverlayDemo.on('render',function(){
+            console.log("Overlay is render");
+        });
+        OverlayDemo.on('beforeRender',function(){
+            console.log("Overlay beforeRender");
+        });
+     OverlayDemo.on('afterRender',function(){
+            console.log("Overlay afterRender");
+        });
+
+     //OverlayDemo.setSize(500,400);
+        M.one("#btn").on("click",function(){
+        OverlayDemo.show();
+    })
+            M.one("#btnclose").on("click",function(){
+        OverlayDemo.close();
+    })
+
+            M.one("#btnpos").on("click",function(){
+        OverlayDemo.setPosition([M.one("#x").get("value"),M.one("#y").get("value")]);
+    })
+    //3秒浮层
+            M.one("#btnpop").on("click",function(ev){
+            //seconds:false     关闭3s关闭,数字是按指定数字关闭，默认3S
+            var pos=M.role("select").get("value");
+        var aa=M.PopLayer({
+                 width:800,
+                    hasClose:true,
+                    content:"提交成功 wrong | warn | help | success !",
+                    type:"wrong",
+              seconds:true,//true默认3秒,指定几秒 seconds:5  (5秒)  0 立即关闭
+              doCountDown:function(sec){
+                ev.currentTarget.setHTML("还有"+sec+"秒关闭");
+                M.log(sec)
+                if(sec==0){
+                 ev.currentTarget.setHTML("3秒关闭");
+                }
+              },
+                    alignTo:[ev.currentTarget,pos,true]
+               },function(){
+                    M.log("关闭回调方法!")
+               });
+        //更新内容
+        aa.show();
+         //aa.updateContent({type:"success",content:"你妹"});
+        //aa.setPosition([1,100]);
+    })
+
+
+
+    //3s 2
+     M.one("#btnpop2").on("click",function(ev){
+     var aa=M.PopLayer({
+                 width:800,
+                    hasClose:true,
+                    content:"提交成功 wrong | warn | help | success !",
+                    type:"warn",
+                    alignTo:[ev.currentTarget,"bl",true]
+               },function(){
+                    M.log("关闭回调方法!")
+               });
+        //更新内容
+        aa.show();
+     })
+
+    });
+</script>
+</html>

@@ -1,0 +1,23 @@
+var svr = require('svr');
+var mo = require('mo');
+var path = require('path');
+
+module.exports = svr.page({
+    attrs: {
+        title: '项目列表'
+    },
+    // init:function(a){
+    //     //new 的时候调用
+    // },
+
+    process: function(request, response) {
+        var prjObjs =  mo.swap('modulesHash');
+        var prjList = [];
+        for(var prjName in prjObjs){
+            prjList.push(prjName);
+        }
+        this.data.list = prjList;
+        this.data.$page = this;
+        this.render();
+    }
+});

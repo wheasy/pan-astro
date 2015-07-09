@@ -1,0 +1,66 @@
+<!DOCTYPE>
+
+<html>
+<head>
+    <title>MoUI - io-iframe</title>
+    <meta charset="utf-8" />
+            <style type="text/css">
+           select{
+                width: 120px
+            }
+        </style>
+    <!--[if lt IE 9]>
+<script src="//r.xgimg.net/js/vendor/html5.js?v=1.0.5"></script>
+<![endif]-->
+<link rel="shortcut icon" type="image/x-icon" href="//r.xgimg.net/img/shortcuticon.png&amp;v=1.0.5" />
+<link rel="stylesheet" href="//r.xgimg.net/~?f=usage/xg/detail&amp;v=1.0.5" />
+    </head>
+<body>
+<button data-role="aaa">提交</button>
+</body>
+<script src="//r.xgimg.net/js/moui/1.0.5/mo.js?combine=true&debug=true&amp;mv=1.0.5&amp;v=100005"></script>
+<script>
+    Mo.require('button-plugin,io-iframe', function(M){
+
+       M.role("aaa").plug(M.Plugin.Button, {
+        type : 'light', //light,gray 不配置默认 light
+        size : 'normal' //normal,small 不配置默认 normal
+       }).button.on("click", function () {
+        M.io.Iframe({
+            url : "test.php",
+            params : {
+                id : 22323,
+                name : "dsfsdf"
+            },
+            success:function(data){
+              var _data=JSON.parse(data.responseText);
+              if(_data.error_code==0){
+                alert(_data.msg)
+              }
+            }
+        });
+
+        /*
+        //有form的传递
+        M.io.Iframe({
+            url : "test.php",
+            form:"form node",
+            params : {
+                id : 22323,
+                name : "dsfsdf"
+            },
+            success:function(data){
+              var _data=JSON.parse(data.responseText);
+              if(_data.error_code==0){
+                alert(_data.msg)
+              }
+            }
+        });
+        */
+       })
+
+
+
+    })
+</script>
+</html>

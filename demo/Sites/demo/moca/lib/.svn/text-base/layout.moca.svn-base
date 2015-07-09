@@ -1,0 +1,153 @@
+/**
+$layout 代表所有layout的类的命名空间，解释一下$layout构成,提供wap布局的方式及设置，
+主要包含：table等分布局、flex等分布局和form布局。
+依赖文件：
+    "lib/reset";
+   
+@main layout
+@module layout  
+@since 1.0.0
+**/
+
+
+
+$layout{
+    /**
+    table等分布局，使用时，HTML遵循以下形式：
+        css调用：
+        $layout _tbequal();
+
+        HTML遵循以下形式： 
+        单行行结构：
+        <ul class="table-equal">
+            <li>111</li>
+            <li>222</li>
+            <li>333</li>
+            <li>444</li>
+        </ul>
+        多行结构：
+        <div class="table-equal">
+            <ul>
+                <li>111</li>
+                <li>222</li>
+                <li>333</li>
+                <li>444</li>
+            </ul>
+            <ul>
+                <li>111</li>
+                <li>222</li>
+                <li>333</li>
+                <li>444</li>
+            </ul>
+        </div>
+
+
+    @module tbequal
+    @class tbequal
+    **/
+    _tbequal(){
+        .table-equal{
+            $display _table();
+            table-layout:fixed;
+            width:100%;
+            ul{
+                $display _table-row();
+            }
+            li{
+                $display _table-cell();
+            }
+        }
+    }
+
+
+    /**
+    flex等分布局，使用时，HTML遵循以下形式：
+        css调用：
+        $layout _flexequal();
+
+        HTML遵循以下形式： 
+        单行行结构：
+        <ul class="flex-equal">
+            <li>111</li>
+            <li>222</li>
+            <li>333</li>
+            <li>444</li>
+        </ul>
+
+    @module flex-equal
+    @class flex-equal
+    **/
+    _flexequal(){
+        .flex-equal{
+            $display _box();
+            width:100%;
+            li{
+                $display _flex(1 2 0);
+            }
+        }
+    }
+
+    /**
+    水平垂直居中布局，使用时，HTML遵循以下形式：
+        css调用：
+        $layout _flexcenter();     //flex水平垂直居中，x横向居中，y垂直居中
+        $layout _trancenter();     //translate水平垂直居中，x横向居中，y垂直居中
+
+        HTML遵循以下形式： 
+        单行行结构：
+        <div class="flex-center">
+            <div class="fc-item">111</div>
+        </div>
+
+    @module flex-center
+    @class flex-center
+    **/
+    _flexcenter(@val:both){
+        .flex-center{
+            $display _box();
+            _center(@val)when(@val=both){
+                justify-content:center;
+                align-items:center;
+            }
+            _center(@val)when(@val=x){
+                justify-content:center;
+            }
+            _center(@val)when(@val=y){
+                align-items:center;
+            }
+            _center(@val);
+        }
+    }
+    _trancenter(@val:both){
+        .fc-item{
+            position:absolute;
+            top:50%;
+            left:50%;
+            _center(@val)when(@val=both){
+                transform: translate(-50%, -50%);
+            }
+            _center(@val)when(@val=x){
+                transform: translate(-50%, 0);
+            }
+            _center(@val)when(@val=y){
+                transform: translate(0, -50%);
+            }
+            _center(@val);
+        }
+    }
+    _justify(){
+        $display _flexbox();
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        -webkit-justify-content: space-between;
+        justify-content: space-between;
+    }
+    _align(){
+        $display _flexbox();
+        -webkit-align-items:center;
+        -moz-align-items:center;
+        -ms-align-items:center;
+        align-items:center;
+    }
+}
+

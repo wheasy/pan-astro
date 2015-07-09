@@ -1,0 +1,12 @@
+<!-- 手机站点Demo -->
+<module:page-mobile title="应用demo" app="true" singleApp="true">
+    <div class="g-wrap" data-role="moto-app">
+    </div>
+    <span style="display:none"  class="m-icon i-gotop gotop" data-role="gotop"></span>
+    <div style="display:none" class="form-loading" data-role="form-loading">
+        <div class="loading"><i class="m-icon i-spinner"></i><p>正在提交...</p></div>
+    </div>
+    <script>
+        $isdebug = true;
+    </script>
+</module:page-mobile>

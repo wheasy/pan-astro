@@ -1,0 +1,261 @@
+{
+	"error_code": 0,
+	"data":[{
+			 "district_code": "100010000",
+				 "district_name": "北京市",
+				 "sub": [
+				 {
+					 "district_code": "100010100",
+					 "district_name": "北京市",
+					 "sub": [
+					 {
+						 "district_code": "100010101",
+						 "district_name": "东城区",
+						 "sub": null
+					 },
+					 {
+						 "district_code": "100010102",
+						 "district_name": "西城区",
+						 "sub": null
+					 },
+					 {
+						 "district_code": "100010103",
+						 "district_name": "崇文区",
+						 "sub": null
+					 },
+					 {
+						 "district_code": "100010104",
+						 "district_name": "宣武区",
+						 "sub": null
+					 },
+					 {
+						 "district_code": "100010105",
+						 "district_name": "朝阳区",
+						 "sub": null
+					 },
+					 {
+						 "district_code": "100010106",
+						 "district_name": "丰台区",
+						 "sub": null
+					 },
+					 {
+						 "district_code": "100010107",
+						 "district_name": "石景山区",
+						 "sub": null
+					 },
+					 {
+						 "district_code": "100010108",
+						 "district_name": "海淀区",
+						 "sub": null
+					 },
+					 {
+						 "district_code": "100010109",
+						 "district_name": "门头沟区",
+						 "sub": null
+					 },
+					 {
+						 "district_code": "100010110",
+						 "district_name": "房山区",
+						 "sub": null
+					 },
+					 {
+						 "district_code": "100010111",
+						 "district_name": "通州区",
+						 "sub": null
+					 },
+					 {
+						 "district_code": "100010112",
+						 "district_name": "顺义区",
+						 "sub": null
+					 },
+					 {
+						 "district_code": "100010113",
+						 "district_name": "昌平区",
+						 "sub": null
+					 },
+					 {
+						 "district_code": "100010114",
+						 "district_name": "大兴区",
+						 "sub": null
+					 },
+					 {
+						 "district_code": "100010115",
+						 "district_name": "怀柔区",
+						 "sub": null
+					 },
+					 {
+						 "district_code": "100010116",
+						 "district_name": "平谷区",
+						 "sub": null
+					 },
+					 {
+						 "district_code": "100010117",
+						 "district_name": "密云区",
+						 "sub": null
+					 },
+					 {
+						 "district_code": "100010118",
+						 "district_name": "延庆县",
+						 "sub": null
+					 }
+					 ]
+				 }
+			 ]
+		 },
+		 {
+			 "district_code": "100020000",
+			 "district_name": "天津市",
+			 "sub": null
+		 },
+		 {
+			 "district_code": "100030000",
+			 "district_name": "河北省",
+			 "sub": null
+		 },
+		 {
+			 "district_code": "100040000",
+			 "district_name": "山西省",
+			 "sub": null
+		 },
+		 {
+			 "district_code": "100050000",
+			 "district_name": "内蒙古自治区",
+			 "sub": null
+		 },
+		 {
+			 "district_code": "100060000",
+			 "district_name": "辽宁省",
+			 "sub": null
+		 },
+		 {
+			 "district_code": "100070000",
+			 "district_name": "吉林省",
+			 "sub": null
+		 },
+		 {
+			 "district_code": "100080000",
+			 "district_name": "黑龙江",
+			 "sub": null
+		 },
+		 {
+			 "district_code": "100090000",
+			 "district_name": "上海市",
+			 "sub": null
+		 },
+		 {
+			 "district_code": "100100000",
+			 "district_name": "江苏省",
+			 "sub": null
+		 },
+		 {
+			 "district_code": "100110000",
+			 "district_name": "浙江省",
+			 "sub": null
+		 },
+		 {
+			 "district_code": "100120000",
+			 "district_name": "安徽省",
+			 "sub": null
+		 },
+		 {
+			 "district_code": "100130000",
+			 "district_name": "福建省",
+			 "sub": null
+		 },
+		 {
+			 "district_code": "100140000",
+			 "district_name": "江西省",
+			 "sub": null
+		 },
+		 {
+			 "district_code": "100150000",
+			 "district_name": "山东省",
+			 "sub": null
+		 },
+		 {
+			 "district_code": "100160000",
+			 "district_name": "河南省",
+			 "sub": null
+		 },
+		 {
+			 "district_code": "100170000",
+			 "district_name": "湖北省",
+			 "sub": null
+		 },
+		 {
+			 "district_code": "100180000",
+			 "district_name": "湖南省",
+			 "sub": null
+		 },
+		 {
+			 "district_code": "100190000",
+			 "district_name": "广东省",
+			 "sub": null
+		 },
+		 {
+			 "district_code": "100200000",
+			 "district_name": "广西壮族自治区",
+			 "sub": null
+		 },
+		 {
+			 "district_code": "100210000",
+			 "district_name": "海南省",
+			 "sub": null
+		 },
+		 {
+			 "district_code": "100220000",
+			 "district_name": "重庆市",
+			 "sub": null
+		 },
+		 {
+			 "district_code": "100230000",
+			 "district_name": "四川省",
+			 "sub": null
+		 },
+		 {
+			 "district_code": "100240000",
+			 "district_name": "贵州省",
+			 "sub": null
+		 },
+		 {
+			 "district_code": "100250000",
+			 "district_name": "云南省",
+			 "sub": null
+		 },
+		 {
+			 "district_code": "100260000",
+			 "district_name": "西藏自治区",
+			 "sub": null
+		 },
+		 {
+			 "district_code": "100270000",
+			 "district_name": "陕西省",
+			 "sub": null
+		 },
+		 {
+			 "district_code": "100280000",
+			 "district_name": "甘肃省",
+			 "sub": null
+		 },
+		 {
+			 "district_code": "100290000",
+			 "district_name": "青海省",
+			 "sub": null
+		 },
+		 {
+			 "district_code": "100300000",
+			 "district_name": "宁夏回族自治区",
+			 "sub": null
+		 },
+		 {
+			 "district_code": "100310000",
+			 "district_name": "新疆维吾尔自治区",
+			 "sub": null
+		 },
+		 {
+			 "district_code": "100350000",
+			 "district_name": "钓鱼岛",
+			 "sub": null
+		 }
+	]
+}

@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+    <title>Untitled</title>
+    <meta charset="utf-8" /></head>
+
+<body>
+
+Hello World!
+    <div id="abc">id=abc</div>
+    <div class="abc">class=abc</div>
+    <div id="b" class="c">id=b class=c</div>
+    <div title="abc" class="c">title='abc'</div>
+    <div id="id1">
+        <ul>
+            <li class="c">abc</li>
+            <li>abc</li>
+            <li>abc</li>
+            <li>abc</li>
+        </ul>
+    </div>
+    <form id="form1">
+        <input id="input1" name="input1" type="password" placeholder="abc"/>
+        <input id="radio1" name="input2" type="radio" />
+        <input id="radio2" name="input2" type="radio" checked="checked"/>
+        <input id="checkbox1" name="input3" type="checkbox" disabled="disabled" />
+        <input id="file4" name="input4" type="file" />
+        <input id="input5" name="input5" type="password" />
+        <a href="http://aaa">aaaa</a>
+        <div class="hello" title="world">aa</div>
+        <button>点我</button>
+    </form>
+    <part><a>1</a><s></s></part>
+</body>
+<script src="//r.xgimg.net/js/moui/1.0.5/mo.js?combine=true&debug=true&amp;mv=1.0.5&amp;v=78891010"></script>
+
+
+<script>
+    Mo.require('node', function(M){
+        //debugger;
+        var a = M.Selector.query('input[type=radio]:checked');
+        //console.log(M.Selector.query('form input:first-child'));
+        console.log(a);
+        console.log('require success');
+        //var MS = M.Selector.query;
+        //var k = M.Selector.query('#abc');
+/*
+        console.log(M.Selector.query('#abc,div'));
+        console.log(M.Selector.query('div#abc'));
+        console.log(M.Selector.query('.c, #abc'));
+        console.log(M.Selector.query('form input[type=password]'));
+        console.log(M.Selector.query('div.hello[title="world"]'));
+
+        console.log(typeof(M.Selector.query('a[href^="http"]')));
+        */
+        //console.log(M.Selector.query('[disabled]'));
+        //console.log(M.Selector.query('[type=radio]:checked'));
+
+/*
+        //
+
+        var K = M.Node.create('<div id="out"><span class="abc">111</span><input type="password" disabled="disabled"/><i data-role="b">222</i><input type="text" /></div>');
+
+        //M.log(M.Selector.query('input[disabled]'))
+        var bbb = K.one('.abc');
+        var ccc = M.all('[type=radio]:checked');
+        M.log(K.roles('b').size());
+        M.log(bbb)
+        M.log(ccc)
+        M.one('button').on('click', function(e){
+            e.halt();
+            M.log(ccc)
+                    M.log(ccc.size())
+
+        })
+*/
+    })
+</script>
+</html>

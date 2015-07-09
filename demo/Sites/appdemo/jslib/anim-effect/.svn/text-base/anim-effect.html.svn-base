@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+    <title>Untitled</title>
+    <meta charset="utf-8" /></head>
+    <style>
+    #abc{background: red; width:50px; }
+    .blue{color:blue;}
+    .red{background:red;}
+    </style>
+<body>
+
+Hello World!
+    <div id="abc">id=abc</div>
+    <div class="class">1</div><div class="class">12</div>
+    <button id="bind">安装插件</button><button id="unbind">卸载插件</button>
+    <button id="button">点击执行动画</button>
+</body>
+<script src="//r.xgimg.net/js/moui/1.0.5/mo.js?combine=true&debug=true&amp;mv=1.0.5&amp;v=788989"></script>
+
+
+<script>
+    Mo.require('anim-node-plugin, anim-effect', function(M){
+
+        var textNode = M.one('#abc'),
+            abcc = M.all('.class'),
+            btn = M.one('#button'),
+            bind = M.one('#bind'),
+            unbind = M.one('#unbind');
+
+
+
+        bind.on('click',function(e){
+            e.halt();
+            //textNode.setStyle('opacity', 0);
+            textNode.plug(M.Plugin.NodeFX, {
+                node: textNode,
+                'effect': 'elasticOut',
+                'from': {
+                    width: '50px',
+                    opacity: 0
+                },
+
+                'to': {
+                    width: '500px',
+                    left: '400px',
+                    top: '100em',
+                    opacity: 1
+                },
+                'duration': 2
+            });
+            M.log('warn','插件安装完毕');
+            textNode.set('innerHTML','插件已安装')
+            //console.log(textNode);
+
+        })
+
+
+
+        btn.on('click',function(e){
+            e.halt();
+            if(!textNode.fx){
+                M.log('warn','插件还未安装');
+                return;
+            }
+            //textNode.fx.REVERSE = !textNode.fx.get('REVERSE');
+            textNode.fx.run();
+            M.log('warn','动画完成了');
+            textNode.fx.on('finish',function(){
+                //debugger;
+
+                textNode.fx.RUNNING = false;
+            });
+
+
+        });
+
+        unbind.on('click',function(e){
+            e.halt();
+            if(!textNode._Plugins || !textNode.fx){
+                M.log('warn','插件未安装，不用卸载')
+                return;
+            }
+            textNode.unplug('fx');
+        })
+
+
+
+
+
+
+    })
+</script>
+</html>

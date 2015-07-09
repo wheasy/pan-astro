@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        <title>MoUI - cascadeSelect</title>
+        <meta charset="utf-8" />
+    </head>
+
+    <body>
+        <select id="cascade">
+            <option value="1111">加载中...</option>
+        </select>
+        <select>
+        </select>
+        <select>
+        </select>
+
+        <br/>
+        <button id="setValue">设置默认值</button>
+        <button id="clearValue">清空默认值</button>
+    <script src="//r.xgimg.net/js/moui/1.0.5/mo.js?combine=true&debug=true&amp;mv=1.0.5&amp;v=788989"></script>
+
+    <script>
+        Mo.require('cascade-select', function(M){
+            var host = M.one('#cascade');
+            host.plug(M.Plugin.CascadeSelect,{
+                url: "js/moui/1.0.5/cascade-select/cascadeselect.json",
+                beautify: true,
+                value:['100010000','100030000','100110000']
+            });
+
+            M.one('#setValue').on('click',function(e){
+                host.cascadeselect.setValue('100030000','100110000','100010000');
+                console.log(host.cascadeselect.getValue());
+            });
+            M.one('#clearValue').on('click', function(e){
+                host.cascadeselect.reset();
+            });
+        });
+    </script>
+    </body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+    <title>Untitled</title>
+    <meta charset="utf-8" /></head>
+
+<body>
+动画
+    <div id="abc" style="width:500px;background:red;opacity:0">id=abc</div>
+    <div class="abc">class=abc</div>
+    <div id="b" class="c">id=b class=c</div>
+    <div title="abc" class="c">title='abc'</div>
+    <div id="id1">
+        <ul>
+            <li class="c">abc</li>
+            <li>abc</li>
+            <li>abc</li>
+            <li>abc</li>
+        </ul>
+    </div>
+    <form id="form1">
+        <input id="input1" name="input1" type="password" />
+        <input id="radio1" name="input2" type="radio" />
+        <input id="radio2" name="input2" type="radio" />
+        <input id="checkbox1" name="input3" type="checkbox" disabled="disabled" />
+        <input id="file4" name="input4" type="file" />
+        <input id="input5" name="input5" type="password" />
+        <a href="http://aaa">aaaa</a>
+        <div class="hello" title="world">aa</div>
+    </form>
+    <part></part>
+</body>
+<script src="http://r.xgimg.net/js/moui/1.0.5/mo.js?combine=true&debug=true&amp;mv=1.0.5&amp;v=788989"></script>
+
+
+<script>
+    Mo.require('node,anim', function(M){
+        console.log('require success');
+
+        var node = M.one('#abc');
+        var _Anim = new M.Anim({
+            node: '#abc',
+            //'effect': 'easing',
+            'from': {
+                width: '500px',
+                opacity: 0
+            },
+
+            'to': {
+                width: '10px',
+                left: '400px',
+                top: '100em',
+                opacity: 1
+            }
+        });
+
+        _Anim.on('start',function(a){
+            console.log('start')
+        }).on('end',function(a) {
+            console.log('end');
+        }).on('pause',function(a){
+            console.log('pause');
+        }).run();
+
+        M.one('.hello').on('click',function(e){
+            e.halt();
+            //debugger;
+            _Anim.set({'from': {
+                width: '800px',
+                opacity: 0
+            },
+
+            'to': {
+                width: '10px',
+                left: '400px',
+                top: '100em',
+                opacity: 1
+            }});
+            //debugger;
+            _Anim.RUNNING = false;
+            _Anim.run();
+        })
+
+ //       setTimeout(function(){_Anim.pause()}, 100);
+//setTimeout(function(){_Anim.stop(true)}, 300);
+
+
+    })
+</script>
+</html>

@@ -1,0 +1,200 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <title>node </title>
+        <meta charset="utf-8" /></head>
+        <style type="text/css"> .red {
+    color: red;
+}
+.blue {
+    color: blue;
+}
+.fff {
+    font-weight: 900;
+}
+#iii {
+    width: 40%;
+}
+#opacity{
+    width:100px;height:200px;background-color:#000;color:red;
+}
+#sizeImg{
+    width:120px;
+}
+</style>
+    <body>
+        <div>
+            <div id="div1">
+                <ul>
+                    <li>
+                        <a id="node-del" class="lll" href="javascript:;">删除节点 </a>
+                    </li>
+                    <li>
+                        <a id="node-append" href="javascript:;">新增节点 </a>
+                    </li>
+                    <li id="asdasd">
+                        <a id="node-setts" href="javascript:;">为所有p节点增加样式 </a>
+                    </li>
+                    <li>
+                        <a id="node-remvoeAttr" href="javascript:;">为所有p节点增加样式 </a>
+                    </li>
+                </ul>
+                <p id="hello">&lt;p id="hello" Hello World! </p>
+                <p id="hello2">&lt;p id="hello2" Hello World! </p>
+                <p id="hello3">&lt;p id="hello3" Hello World! </p>
+            </div>
+        </div>
+        <div>
+            <a href="#" data-role="sss">sss2 </a>
+            <a href="#" data-role="sss">sss1 </a>
+        </div>
+        <div id="iii" style=" %;">iii </div>
+        <input id="ipt1" />
+        <table>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+
+    <div id="opacity">透明度</div>
+
+        <textarea id="aaa"></textarea>
+        <input type="checkbox" data-role="a" value="1" />
+        <input type="checkbox" data-role="a" value="2" checked />
+        <input type="checkbox" data-role="a" value="4" checked />
+        <input type="checkbox" data-role="a" value="3" />
+        <input placeholder="ttt" data-role="place" />
+
+<button data-role="imgSize">获取图片原始大小</button>
+<img data-role="sizeImg" src="http://img4.chinaface.com/large/212aHMc8GtsOPGjHx2fo9lNzMG08.jpg" id="sizeImg"/>
+
+<div style="width:200px;height:200px;position:relative;background-color:#ccc;margin-left:200px;">
+    <div id="getoffset" style="width:100px;height:100px;position:absolute;left:20px;top:50px;background-color:#dedede;"></div>
+</div>
+
+<div>
+    节点替换
+    <i id="idi"></i>
+</div>
+
+        <script src="//r.xgimg.net/js/moui/1.0.5/mo.js?combine=true&debug=true&amp;mv=1.0.5&amp;v=788989"></script>
+    <script type="text/javascript">
+Mo.require('node', function(M) {
+
+
+
+//选择父容器
+debugger
+    M.one('#node-append').setHTML(0);
+
+return
+console.log(M.one('#node-append').ancestor('li'));
+
+    //M.one('table').append('<tr><td></td></tr>')
+
+    //        console.log(M.one('p').get('region'));
+
+    //console.log(M.one('#hello2').insertAfter(1234));
+    //console.log(M.one('#hello2').insertBefore(M.one('#node-del')));
+
+    //console.log('a',M.one('#iii').get('region').width);
+    //console.log('b',M.one('#iii').getStyle('width'));
+
+/*
+测试filter
+M.log(M.all('input').filter(function(n,i) {
+    return n.get('checked');
+    //返回 true或false
+}));
+*/
+
+//getoffset
+M.one('#getoffset').on('click',function() {
+    console.log(M.one('#getoffset').getPosition());
+});
+
+//测试replace方法
+M.one('#idi').replace('success');
+
+
+//测试获取图片原始尺寸
+M.role('imgSize').on('click', function(evt){
+    evt.halt();
+    console.log(M.Node.getImgSize(M.role('sizeImg').getDOMNode()));
+});
+
+//debugger
+//测试设置透明度
+//M.one('#opacity').setStyle('opacity', 0.5);
+
+//测试获取样式宽度
+M.role('sizeImg').on('click',function(){
+    console.log(this.getStyle('width'));
+});
+
+    //M.one('#ipt1').set('value',111);
+    //M.one('#aaa').set('value',222);
+    //console.log(M.one('#aaa').get('value'));
+
+    //M.one('div').append('hello <div>aaa</div>')
+
+    //M.one('#node-setts').appendTo(M.one('#iii'))
+    //var a = M.one('body');
+    //var c = M.one('p');
+    //M.one('#node-setts').one('.a')
+    //console.log(M.one('#asdasd').one('a'));
+    //debugger
+    //M.all('li').all('a').setStyle('float', 'right');
+    //M.one('#sss').setStyle('color', 'red');
+    //console.log(a.contains(c));
+    //return;
+    //debugger
+    var sss = M.one('body');
+    sss = sss.get('children');
+    //debugger
+    sss.each(function(a, b) {
+        //console.log(a._node);
+    }) ;
+    M.one('#node-del').on('click', function() {
+        var s = M.one('p');
+        s.remove();
+    })
+
+    M.one('#node-append').on('click', function() {
+        M.one('body').append('<p>' + new Date() + '</p>')
+    })
+
+    M.one('#node-setts').on('click', function() {
+        M.all('p').addClass('red');
+    })
+
+    M.one('#node-remvoeAttr').on('click', function() {
+        M.all('p').removeAttr('class');
+    })
+
+    //M.one('#node-del').ancestor().next().setAttr('className','fff');
+
+    //console.log(M.one('#hello3').getXY());
+
+    //            M.NodeList.prototype.plug = function(){
+    //            debugger;
+    //                return 1;
+    //            }
+
+    //offset --> getXY
+    //region
+
+});
+</script>
+    </body>
+</html>

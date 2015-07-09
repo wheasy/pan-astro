@@ -1,0 +1,32 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <title>Untitled </title>
+        <meta charset="utf-8" /></head>
+        <style type="text/css">
+        .red ,.opt-active{
+            color: red;
+        }
+        .blue {
+            color: blue;
+        }
+        .fff {
+            font-weight: 900;
+        }
+    </style>
+<body>
+
+<select name="some_name" id="some_name">
+    <option value="option1">some_name0</option>
+    <option value="option2">some_name1</option>
+</select>
+
+    <script src="//r.xgimg.net/js/moui/1.0.5/mo.js?combine=true&debug=true&amp;mv=1.0.5&amp;v=788989"></script>
+    <script type="text/javascript">
+        Mo.require('dropdownlist', function(M) {
+            M.one('#some_name').plug(M.Plugin.DropdownList);
+        });
+    </script>
+</body>
+</html>

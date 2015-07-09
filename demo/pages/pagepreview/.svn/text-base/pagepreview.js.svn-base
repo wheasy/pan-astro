@@ -1,0 +1,85 @@
+var svr = require('svr');
+var mo = require('mo');
+var path = require('path');
+var fs = require('fs');
+
+module.exports = svr.page({
+    attrs: {
+        title: '首页'
+    },
+    // init:function(a){
+    //     //new 的时候调用
+    // },
+
+    process: function(request, response) {
+        var params = this.get('params');
+        var c = require('mocompiler');
+        var projectName = params.prjname;
+        var pageName = params.pagename;
+        var projectCfg = c.getProjectCfg(projectName);
+
+        if(!projectCfg) {
+            console.log('项目未找到' + projectName + '<br/>' + path.join(projectName, 'config'));
+            response.$write('项目未找到' + projectName + '<br/>' + path.join(projectName, 'config'), true);
+            return;
+        }
+        var cdn = projectCfg.cdn || projectName;
+        if(request.$params.publish  === 'true'){
+            cdn = '..';
+        }
+        this.set('$cdn', cdn);
+
+        var pageObj = c.getPagePerObject(projectName, pageName);
+        if (pageObj) {
+            var pageInfo = c.getPage(projectName, pageName);
+            this.set('$hasJs', !!pageInfo.js);
+            this.set('$hasCss', !!pageInfo.less);
+            this.data.$page = this;
+            this.data.$scripts = function() {
+                var s = mo.compress.parse_js({
+                    projectName: projectName,
+                    pageName: pageName,
+                    isCompress: false
+                });
+                var str = '';
+                mo.util.each(s, function(jsObj) {
+                    var url;
+                    switch (jsObj.type) {
+                        case 'module':
+                            if (jsObj.name.indexOf('http:') > -1) {
+                                url = jsObj.name;
+                                break;
+                            }
+                            url = cdn +
+                                (jsObj.name.charAt(0) == '~' ?
+                                    jsObj.name.replace('~', '/js') :
+                                    '/js/m/' + jsObj.name + '.js');
+                            break;
+                        case 'page':
+                            url = cdn + '/js/p/' + jsObj.name + '.js';
+                            break;
+                        default:
+                            url = jsObj.name;
+                            break;
+                    }
+                    if (url) {
+                        str += '<script src="' + url + '"></script>\n';
+                    }
+                });
+                return str;
+            };
+            var html = mo.template.parse(pageObj.html, this.data) || '';
+            // if(request.$params.publish){
+               html =  require('html-minifier').minify(
+                    html, {
+                        // collapseWhitespace: true,
+                        removeComments: true
+                    });
+            // }
+            response.$write(html, true);
+            // response.$write(this.parse(pageObj.html, this.data) || '', true);
+        } else {
+            response.$write('页面未找到', true);
+        }
+    }
+});

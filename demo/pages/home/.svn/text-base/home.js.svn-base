@@ -1,0 +1,46 @@
+var svr = require('svr');
+var mo = require('mo');
+// var user = require('../../models/user_model.js');
+
+
+module.exports = svr.page({
+    attrs:{
+        title:'项目首页'
+    },
+    // init:function(a){
+    //     console.log('hoem');
+            
+    // },
+    process:function(require, response){
+       var prjname = this.get('params').prjname;
+
+        // this.data['list2'] = ['a','b','c'];
+        // debugger
+        // response.$write(JSON.stringify(pagesHash[prjname]), true);
+        this.data['projectname'] = prjname;
+
+        var pagelist = (mo.swap('pagesHash') || {})[prjname]|| {};
+        var pa = [];
+        for(var name in pagelist){
+            pa.push(name);
+        }
+        pa.sort();
+
+        this.data['pagelist'] = pa;
+
+        var modulelist = (mo.swap('modulesHash') || {})[prjname]|| {};
+        var ma = [];
+        for(var name in modulelist){
+            ma.push(name);
+        }
+        ma.sort();
+        this.data['modulelist'] = ma;
+        this.render();
+
+        //读取
+        // user.find({name:'Jim'},function(err, docs){
+        // 	this.data.list = docs;
+        // 	this.render();
+        // }.bind(this));
+    }
+});
