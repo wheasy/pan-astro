@@ -154,5 +154,11 @@ Astro会根据二倍图自动生成一倍图。二倍图的命名规范是图片
 
 ### 发布 <a name="publish"></a>
 
-### Astro受益于一下开源项目
+### Astro受益于以下源项目
 * node-smushit
+* commander
+* fs-extra
+* images
+* uglify-js
+* node-smushit
+* html-minifier
